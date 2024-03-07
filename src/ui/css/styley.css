@@ -1,0 +1,751 @@
+/*------------------------------------------------------------------
+Project:	QR Code Gen
+Version:	0.1
+Last change:	26/02/2024
+Assigned to:	Filipe Ribeiro e Alexandre Barreira
+-------------------------------------------------------------------*/
+
+/*------------------------------------------------------------------
+
+01. General Setting
+02. Header & Navigation
+03. Hero Section
+04. About Section
+05. Pricing Section
+06. FAQ's Section
+07. Footer
+
+-------------------------------------------------------------------*/
+
+/*--------------------------------------------------
+	01. General Settings
+---------------------------------------------------*/
+
+/* Google fonts or _typography */
+
+/* @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&family=Yanone+Kaffeesatz&display=swap'); */
+
+/* <style>
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap')
+</style> */
+
+/* variables */
+
+:root {
+	/* colors */
+	--background-primary: #181818;
+	--background-3: #222;
+	--text-color-dark: #000000;
+	--text-color-light: #aaff00;
+	--hover-color: #ffff;
+	--background-secondary: #aaff00;
+
+	/* typography */
+
+	/* --font: url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap'); */
+}
+
+/************************* RESET ***********************************/
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: 'Fira Code', monospace;
+	/* border: 1px solid orange; */
+}
+
+a {
+	text-decoration: none;
+}
+
+ul {
+	list-style-type: none;
+}
+
+img {
+	display: block !important;
+}
+
+main {
+	display: block !important;
+}
+
+/* general settings */
+
+html {
+	scroll-behavior: smooth;
+}
+
+@media (max-width: 1075px) {
+	html {
+		font-size: 15px;
+		font-weight: bold;
+	}
+	h1 {
+		font-size: 56px;
+	}
+}
+
+@media (max-width: 991px) {
+	html {
+		font-size: 14px;
+		font-weight: bold;
+	}
+}
+
+@media (max-width: 940px) {
+	html {
+		font-size: 13px;
+		font-weight: bold;
+	}
+}
+
+@media (max-width: 860px) {
+	html {
+		font-size: 12px;
+		font-weight: bold;
+	}
+}
+
+@media (max-width: 768px) {
+	html {
+		font-size: 11px;
+		font-weight: bold;
+	}
+}
+
+@media (max-width: 480px) {
+	html {
+		font-size: 10px;
+		font-weight: bold;
+	}
+}
+
+body {
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+}
+
+/* reusable css classes */
+
+.container {
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 0 2rem;
+}
+
+@media (max-width: 480px) {
+	.container {
+		padding: 0 1rem;
+	}
+}
+
+/*--------------------------------------------------
+	02. Header & Navigation
+---------------------------------------------------*/
+
+.header {
+	position: fixed;
+	width: 100%;
+	top: 0;
+	left: 0;
+	box-sizing: border-box;
+	height: 70px;
+	padding: 2.5rem;
+	background: var(--background-primary);
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	z-index: 100;
+}
+
+.logo {
+	font-size: 2.5rem;
+	font-weight: bold;
+}
+
+a {
+	color: var(--text-color-light);
+	font-weight: bold;
+}
+
+a:hover {
+	color: var(--hover-color);
+	border-radius: 2px;
+	transition: 0.5s;
+}
+
+/* verificar neste ponto abaixo para o tamanho das âncoras */
+
+.nav,
+.navbar {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 1.5rem;
+}
+
+/* menu hamburger starts */
+
+#webapp_cover {
+	display: none;
+}
+
+@media (max-width: 800px) {
+	/* body {
+		overflow-x: hidden;
+	} */
+
+	.navbar {
+		display: flex;
+		flex-direction: column;
+		/* align-items: center; */
+		/* justify-content: space-between; */
+		position: fixed;
+		width: 50%;
+		height: 100%;
+		top: 69px;
+		right: 0;
+		background: var(--background-primary);
+		/* border: var(--background-secondary) solid 2px; */
+		font-size: 2rem;
+		font-weight: bold;
+		padding: 10rem 1rem;
+		transition: all 1s ease;
+		z-index: 10;
+		transform: translateX(100%);
+	}
+
+	.navbar.active {
+		transform: translateX(0);
+	}
+}
+
+@media (max-width: 800px) {
+	#webapp_cover {
+		position: absolute;
+		display: block;
+		top: 2.75rem;
+		right: 4rem;
+		left: auto;
+		width: 39px;
+		margin: 0 auto;
+		color: var(--background-secondary);
+		transform: translateY(-50%) scale(1);
+	}
+
+	#webapp_cover:hover {
+		cursor: pointer;
+		color: var(--hover-color);
+		opacity: 1;
+	}
+}
+
+#menu_button {
+	width: 39px;
+	overflow: hidden;
+}
+
+#menu_checkbox {
+	display: none;
+}
+
+#menu_label {
+	position: relative;
+	display: block;
+	height: 29px;
+	cursor: pointer;
+}
+
+#menu_label:before,
+#menu_label:after,
+#menu_text_bar {
+	position: absolute;
+	left: 0;
+	width: 100%;
+	height: 5px;
+	background-color: var(--background-secondary);
+}
+
+#menu_label:before,
+#menu_label:after {
+	content: '';
+	transition: 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55) left;
+}
+
+#menu_label:before {
+	top: 0;
+}
+
+#menu_label:after {
+	top: 12px;
+}
+
+#menu_text_bar {
+	top: 24px;
+}
+
+#menu_text_bar:before {
+	content: 'MENU';
+	position: absolute;
+	top: 5px;
+	right: 0;
+	left: 0;
+	font-size: 12px;
+	font-weight: bold;
+	text-align: center;
+}
+
+#menu_checkbox:checked + #menu_label:before {
+	left: -39px;
+}
+
+#menu_checkbox:checked + #menu_label:after {
+	left: 39px;
+}
+
+#menu_checkbox:checked + #menu_label #menu_text_bar:before {
+	animation: moveUpThenDown 0.8s ease 0.2s forwards, shakeWhileMovingUp 0.8s ease 0.2s forwards, shakeWhileMovingDown 0.2s ease 0.8s forwards;
+}
+
+@keyframes moveUpThenDown {
+	0% {
+		top: 0;
+	}
+	50% {
+		top: -27px;
+	}
+	100% {
+		top: -14px;
+	}
+}
+
+@keyframes shakeWhileMovingUp {
+	0% {
+		transform: rotateZ(0);
+	}
+	25% {
+		transform: rotateZ(-10deg);
+	}
+	50% {
+		transform: rotateZ(0deg);
+	}
+	75% {
+		transform: rotateZ(10deg);
+	}
+	100% {
+		transform: rotateZ(0);
+	}
+}
+
+@keyframes shakeWhileMovingDown {
+	0% {
+		transform: rotateZ(0);
+	}
+	80% {
+		transform: rotateZ(3deg);
+	}
+	90% {
+		transform: rotateZ(-3deg);
+	}
+	100% {
+		transform: rotateZ(0);
+	}
+}
+
+/* menu hamburger ends */
+
+/*--------------------------------------------------
+	03. Hero Section
+---------------------------------------------------*/
+
+.hero {
+	position: relative;
+	/* width: 100%; */
+	/* height: 100%; */
+	height: 90vh;
+	/* display: flex;
+	justify-content: center;
+	align-items: center; */
+	margin-top: 75px;
+	background-color: var(--background-secondary);
+	/* background-size: 25rem; */
+	background-position: right;
+	display: flex;
+	align-items: center;
+
+	/* padding: 0 10%; */
+}
+
+.hero_container {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 100vh;
+	background: var(--background-secondary);
+	background-size: 25rem;
+	background-position: right;
+	display: flex;
+	align-items: center;
+	padding: 0 10%;
+}
+
+.hero_container2 {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.hero_container2 h1 {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	font-size: 56px;
+	font-weight: 700;
+	line-height: 1.2;
+	color: var(--text-color-dark);
+	margin-bottom: 1rem;
+}
+
+@media (max-width: 1430px) {
+	.hero_container2 h1 {
+		font-size: 50px;
+	}
+}
+
+@media (max-width: 1355px) {
+	.hero_container2 h1 {
+		font-size: 48px;
+	}
+}
+
+@media (max-width: 1326px) {
+	.hero_container2 h1 {
+		font-size: 46px;
+	}
+}
+
+@media (max-width: 1302px) {
+	.hero_container2 h1 {
+		font-size: 42px;
+	}
+}
+
+.hero_container2 p {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	position: relative;
+	font-size: 20px;
+	font-weight: 500;
+	margin: 20px 0 40px;
+	color: var(--text-color-dark);
+}
+
+.btn_get_started {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-content: center;
+	align-items: center;
+	background-color: var(--background-3);
+	font-weight: 800 bold !important;
+	letter-spacing: 1px;
+	font-size: 1rem;
+	text-transform: uppercase;
+	padding: 0.875rem 3.275rem;
+	border: solid var(--text-color-dark) 2px;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+.btn_get_started:hover {
+	color: var(--hover-color);
+	background-color: var(--text-color-dark);
+	border-radius: 5px;
+	font-weight: 800 bold;
+	transition: 0.5s;
+	cursor: pointer;
+}
+
+/* Starts QR Code Animation */
+
+.small_container {
+	margin: 5rem;
+	padding: 0.5rem;
+	position: relative;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	width: 400px;
+	height: 400px;
+	background-color: var(--background-secondary);
+}
+
+.small_container .border {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	/* background: url(/border.png); */
+	object-fit: cover;
+	background-position: center;
+	background-size: cover;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.small_container .border .qrcode {
+	position: relative;
+	width: 380px;
+	height: 380px;
+	object-fit: cover;
+	background-position: center;
+	background-size: cover;
+}
+
+.small_container .border .qrcode {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: url(/frontend/src/images/scan_me_qr_code-removebg-preview.png);
+	background-size: 380px;
+	overflow: hidden;
+	animation: animImg 4s linear infinite;
+}
+
+@keyframes animImg {
+	0%,
+	100% {
+		height: 18px;
+	}
+	50% {
+		height: calc(100% - 18px);
+	}
+}
+
+.small_container .border .qrcode::after {
+	content: '';
+	position: absolute;
+	inset: 18px;
+	width: calc(100% - 40px);
+	height: 2px;
+	background: var(--hover-color);
+	filter: drop-shadow(0 0 30px var(--hover-color)) drop-shadow(0 0 60px var(--hover-color)) drop-shadow(0 0 100px var(--hover-color));
+	animation: animLine 4s linear infinite;
+}
+@keyframes animLine {
+	0%,
+	100% {
+		top: 18px;
+	}
+	50% {
+		top: calc(100% - 18px);
+	}
+}
+
+@media (max-width: 1270px) {
+	.hero_container {
+		margin-top: 5rem;
+		padding-top: 0.5rem;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.small_container {
+		margin-bottom: 1rem;
+		padding-top: 0.5rem;
+		/* position: relative; */
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+	}
+}
+
+/* Ends QR Code Animation */
+
+/*--------------------------------------------------
+	04. About Section
+---------------------------------------------------*/
+
+.about {
+	height: 100vh;
+	background: var(--background-primary);
+	background-size: 25rem;
+	background-position: right;
+	display: flex;
+	align-items: center;
+	padding: 0 10%;
+}
+
+.about-content {
+	max-width: 600px;
+}
+
+.about-content h1 {
+	position: relative;
+	font-size: 56px;
+	font-weight: 700;
+	line-height: 1.2;
+}
+
+.about-content h2 {
+	position: relative;
+	font-size: 32px;
+	font-weight: 700;
+	color: var(--text-color-light);
+}
+
+.about-content p {
+	position: relative;
+	font-size: 16px;
+	margin: 20px 0 40px;
+	color: var(--text-color-light);
+}
+
+.about-content .btn-box {
+	display: flex;
+	justify-content: space-between;
+	width: 345px;
+	height: 50px;
+}
+
+/*--------------------------------------------------
+	05. Pricing Section
+---------------------------------------------------*/
+
+.pricing {
+	height: 100vh;
+	background: var(--background-secondary);
+	background-size: 25rem;
+	background-position: right;
+	display: flex;
+	align-items: center;
+	padding: 0 10%;
+}
+
+/*--------------------------------------------------
+	06. FAQ's Section
+---------------------------------------------------*/
+
+.FAQ {
+	height: 100vh;
+	background: var(--background-primary);
+	background-size: 25rem;
+	background-position: right;
+	display: flex;
+	align-items: center;
+	padding: 0 10%;
+}
+
+.FAQ-content {
+	max-width: 600px;
+}
+
+.FAQ-content h1 {
+	position: relative;
+	font-size: 56px;
+	font-weight: 700;
+	line-height: 1.2;
+}
+
+.FAQ-content h2 {
+	position: relative;
+	font-size: 32px;
+	font-weight: 700;
+	color: var(--text-color-light);
+}
+
+.FAQ-content p {
+	position: relative;
+	font-size: 16px;
+	margin: 20px 0 40px;
+	color: var(--text-color-light);
+}
+
+.FAQ-content .btn-box {
+	display: flex;
+	justify-content: space-between;
+	width: 345px;
+	height: 50px;
+
+	display: flex;
+	justify-content: space-between;
+	width: 345px;
+	height: 50px;
+}
+
+/*--------------------------------------------------
+	07. Footer
+---------------------------------------------------*/
+
+.footer {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background-color: var(--background-secondary);
+	gap: 1.5rem;
+	font-weight: 300;
+	font-size: 1rem;
+	padding: 1.75rem 5rem;
+}
+
+.footer ul {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 1.5rem;
+	color: var(--text-color-dark);
+}
+
+.footer a {
+	color: var(--text-color-dark);
+}
+
+.facebook:hover {
+	color: #3b5998;
+	box-shadow: var(--hover-color);
+	transition: 0.5s;
+}
+
+.instagram:hover {
+	color: #ffa500;
+	box-shadow: var(--hover-color);
+	transition: 0.5s;
+}
+
+.linkedin:hover {
+	color: #0e76a8;
+	box-shadow: var(--hover-color);
+	transition: 0.5s;
+}
+
+.youtube:hover {
+	color: #c4302b;
+	box-shadow: var(--hover-color);
+	transition: 0.5s;
+}
+
+@media (max-width: 800px) {
+	.footer {
+		padding: 1.75rem 1rem;
+	}
+}
+
+.footer p {
+	color: var(--text-color-dark);
+	font-weight: 500;
+	font-size: 1rem;
+}

@@ -1,0 +1,412 @@
+/*--------------------------------------------------
+	01. General Settings
+---------------------------------------------------*/
+
+:root {
+	/* colors */
+	--background-primary: #181818;
+	--background-3: #222;
+	--backgorund-4: #333;
+	--text-color-dark: #000000;
+	--text-color-light: #ffff;
+	--text-color-input: #aaa;
+	--background-secondary: #aaff00;
+	--hover-color: #ffff;
+}
+
+/* Font import and global reset */
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap');
+
+/* Global reset */
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: 'Fira Code', monospace;
+	/* border: 1px solid orange; */
+}
+
+a {
+	text-decoration: none;
+}
+
+ul {
+	list-style-type: none;
+}
+
+html {
+	scroll-behavior: smooth;
+}
+
+@media (max-width: 1075px) {
+	html {
+		font-size: 15px;
+		font-weight: bold;
+	}
+	h1 {
+		font-size: 56px;
+	}
+}
+
+@media (max-width: 991px) {
+	html {
+		font-size: 14px;
+		font-weight: bold;
+	}
+}
+
+@media (max-width: 940px) {
+	html {
+		font-size: 13px;
+		font-weight: bold;
+	}
+}
+
+@media (max-width: 860px) {
+	html {
+		font-size: 12px;
+		font-weight: bold;
+	}
+}
+
+@media (max-width: 768px) {
+	html {
+		font-size: 11px;
+		font-weight: bold;
+	}
+}
+
+/* Body styling */
+body {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
+	background: var(--background-primary);
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+}
+
+/* Section styles */
+section {
+	position: absolute;
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 2px;
+	flex-wrap: wrap;
+	overflow: hidden;
+}
+
+/* Animated gradient effect */
+section::before {
+	content: '';
+	position: absolute;
+	inset: 18px;
+	width: calc(100% - 40px);
+	height: 2px;
+}
+
+/* Animation keyframes */
+/* @keyframes animate {
+	0% {
+		transform: translateY(-100%);
+	}
+	100% {
+		transform: translateY(100%);
+	}
+} */
+
+@keyframes animLine {
+	0%,
+	100% {
+		top: 18px;
+	}
+	50% {
+		top: calc(100% - 18px);
+	}
+}
+
+/*--------------------------------------------------
+	02. Header & Navigation
+---------------------------------------------------*/
+
+.header {
+	position: fixed;
+	width: 100%;
+	top: 0;
+	left: 0;
+	box-sizing: border-box;
+	height: 70px;
+	padding: 2.5rem;
+	background: var(--background-primary);
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	z-index: 100;
+}
+
+.logo {
+	font-size: 2.5rem;
+	font-weight: bold;
+}
+
+header a {
+	font-weight: bold;
+	color: var(--background-secondary);
+}
+
+a:hover {
+	color: var(--hover-color);
+	border-radius: 2px;
+	transition: 0.5s;
+}
+
+/* verificar neste ponto abaixo para o tamanho das âncoras */
+
+.nav,
+.navbar {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 1.5rem;
+}
+
+/*--------------------------------------------------
+	03. Signin / Signup Form
+---------------------------------------------------*/
+
+/* Sign-in form styles */
+.signin {
+	position: absolute;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	width: 500px;
+	background: var(--background-3);
+	z-index: 1000;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 40px;
+	border-radius: 4px;
+	box-shadow: 0 15px 35px rgba(0, 0, 0, 0.9);
+}
+
+.signin .content {
+	position: relative;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	gap: 40px;
+}
+
+.signin .content h2 {
+	font-size: 2em;
+	color: var(--background-secondary);
+	text-transform: uppercase;
+}
+
+.signin .content .form {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	gap: 25px;
+}
+
+.signin .content .form .inputBox {
+	position: relative;
+	width: 100%;
+}
+
+.signin .content .form .inputBox input {
+	position: relative;
+	width: 100%;
+	background: var(--backgorund-4);
+	border: none;
+	outline: none;
+	padding: 25px 10px 7.5px;
+	border-radius: 4px;
+	color: var(--text-color-light);
+	font-weight: 500;
+	font-size: 1em;
+}
+
+.signin .content .form .inputBox i {
+	position: absolute;
+	left: 0;
+	padding: 15px 10px;
+	font-style: normal;
+	color: var(--text-color-input);
+	transition: 0.5s;
+	pointer-events: none;
+}
+
+.signin .content .form .inputBox input:focus ~ i,
+.signin .content .form .inputBox input:valid ~ i {
+	transform: translateY(-7.5px);
+	font-size: 0.8em;
+	color: var(--text-color-light);
+}
+
+.signin .content .form .links {
+	position: relative;
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+}
+
+.signin .content .form .links a {
+	color: var(--text-color-light);
+	text-decoration: none;
+}
+
+.signin .content .form .links a:nth-child(2) {
+	color: var(--background-secondary);
+	font-weight: 600;
+}
+
+/* ** Input (submit - LogIn) ** */
+
+/* .signin .content .form .inputBox input[type='submit'] {
+	padding: 10px;
+	background: var(--background-secondary);
+	color: var(--text-color-dark);
+	font-weight: 600;
+	font-size: 1.35em;
+	letter-spacing: 0.05em;
+	cursor: pointer;
+}
+
+.content .form .inputBox input[type='submit']:hover {
+	background: var(--background-primary);
+	color: var(--hover-color);
+	cursor: pointer;
+}
+
+input[type='submit']:active {
+	opacity: 0.6;
+} */
+
+/* ** Nova Âncora ** */
+
+.submit {
+	position: relative;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 10px;
+	background: var(--background-secondary);
+	color: var(--text-color-dark);
+	font-weight: 600;
+	font-size: 1.35em;
+	letter-spacing: 0.05em;
+	border-radius: 5px;
+	border: solid 2px var(--background-primary);
+	border-right: solid 5px var(--text-color-dark);
+	border-bottom: solid 7px var(--text-color-dark);
+	border-left: solid 2px var(--text-color-dark);
+	cursor: pointer;
+}
+
+.submit:hover {
+	background: var(--background-primary);
+	color: var(--hover-color);
+	border: solid 2px var(--background-primary);
+	border-right: solid 5px var(--hover-color);
+	border-bottom: solid 7px var(--hover-color);
+	border-left: solid 2px var(--hover-color);
+	cursor: pointer;
+}
+
+.submit:active {
+	opacity: 0.6;
+}
+
+/* Media queries for responsive design */
+@media (max-width: 900px) {
+	section span {
+		width: calc(10vw - 2px);
+		height: calc(10vw - 2px);
+	}
+}
+
+@media (max-width: 600px) {
+	section span {
+		width: calc(20vw - 2px);
+		height: calc(20vw - 2px);
+	}
+}
+
+/*--------------------------------------------------
+	06. Footer
+---------------------------------------------------*/
+
+.footer {
+	width: 100%;
+	position: absolute;
+	display: inline-block;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background-color: var(--background-secondary);
+	gap: 1.5rem;
+	font-weight: 300;
+	font-size: 1rem;
+	padding: 1.75rem 5rem;
+}
+
+.footer ul {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 1.5rem;
+	color: var(--text-color-dark);
+}
+
+@media (max-width: 800px) {
+	.footer {
+		padding: 1.75rem 1rem;
+	}
+}
+
+.footer p,
+a {
+	text-decoration: none;
+	color: var(--text-color-dark);
+	font-weight: 600;
+	font-size: 1rem;
+}
+
+.facebook:hover {
+	color: #3b5998;
+	box-shadow: #3b5998;
+	transition: 0.5s;
+}
+
+.instagram:hover {
+	color: #ffa500;
+	box-shadow: #ffa500;
+	transition: 0.5s;
+}
+
+.linkedin:hover {
+	color: #0e76a8;
+	box-shadow: #0e76a8;
+	transition: 0.5s;
+}
+
+.youtube:hover {
+	color: #c4302b;
+	box-shadow: #c4302b;
+	transition: 0.5s;
+}

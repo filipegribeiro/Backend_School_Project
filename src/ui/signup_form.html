@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap" rel="stylesheet" />
+		<title>SignUp Form</title>
+		<link rel="stylesheet" href="/frontend/src/css/signin_signup_form.css" />
+	</head>
+	<body>
+		<header class="header">
+			<a class="logo" href="#hero">QRCode Gen</a>
+			<nav class="nav">
+				<ul class="navbar">
+					<li><a href="/frontend/src/html/indexey.html">Home</a></li>
+					<!-- <li><a href="#about">About</a></li>
+					<li><a href="#FAQ">FAQ's</a></li>
+					<li><a href="#footer">Contact Us</a></li> -->
+					<li><a href="/frontend/src/html/signin_form.html">SigIn</a></li>
+				</ul>
+				<!-- menu hamburger -->
+				<!-- <div id="webapp_cover">
+					<div id="menu_button">
+						<input type="checkbox" id="menu_checkbox" />
+						<label for="menu_checkbox" id="menu_label">
+							<div id="menu_text_bar"></div>
+						</label>
+					</div>
+				</div> -->
+			</nav>
+		</header>
+		<section>
+			<div class="signin">
+				<div class="content">
+					<h2>Sign Up</h2>
+					<div id="form" class="form">
+						<div class="inputBox">
+							<input type="text" id="name" value="" required />
+							<i>Name</i>
+						</div>
+						<!-- <div class="inputBox">
+							<input type="text" required />
+							<i>NIF</i>
+						</div> -->
+						<!-- <div class="inputBox">
+							<input type="text" required />
+							<i>Address</i>
+						</div> -->
+						<div class="inputBox">
+							<input type="email" id="mail" value="" required />
+							<i>Mail</i>
+						</div>
+						<!-- <div class="inputBox">
+							<input type="text" required />
+							<i>Phone</i>
+						</div> -->
+						<div class="inputBox">
+							<input type="password" id="pass" value="" required />
+							<i>Password</i>
+						</div>
+						<div class="inputBox">
+							<input type="password" id="confirmPass" value="" required />
+							<i>Confirm Password</i>
+						</div>
+						<div class="links">
+							<a href="#">Forgot Password?</a>
+							<a href="/frontend/src/html/signin_form.html">I already have an account</a>
+						</div>
+						<div class="inputBox">
+							<!-- <input type="submit" value="Create" /> -->
+							<!-- <a class="submit" href="/frontend/src/html/indexey.html">Create</a> -->
+							<button id="submit_form" class="submit" type="submit">Create</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<footer id="footer" class="footer">
+			<p>2024 an Engage Consulting Website, All Rights Reserved</p>
+			<ul>
+				<li><a href="#" class="facebook">Facebook</a></li>
+				<li><a href="#" class="instagram">Instagram</a></li>
+				<li><a href="#" class="linkedin">Linkedin</a></li>
+				<li><a href="#" class="youtube">Youtube</a></li>
+			</ul>
+		</footer>
+		<script>
+			//    *** SIGNUP PROCESS ***
+
+			document.addEventListener('DOMContentLoaded', () => {
+				const signupForm = document.getElementById('form');
+				const button = document.getElementById('submit_form');
+
+				// button.addEventListener('click', async event => {
+				// 	event.preventDefault();
+				// 	form.submit();
+				// });
+
+				signupForm.addEventListener('click', async event => {
+					event.preventDefault();
+
+					const name = document.getElementById('name').value;
+					const email = document.getElementById('mail').value;
+					const password = document.getElementById('pass').value;
+					const confirmPassword = document.getElementById('confirmPass').value;
+
+					// Validação dos campos:
+
+					name.value = '';
+					email.value = '';
+					password.value = '';
+					confirmPassword.value = '';
+
+					if (name.value == '' || email.value == '' || password.value == '' || confirmPassword.value == '') {
+						alert('Please complete all fields.');
+						return;
+					} else {
+						alert('This form has been successfully submitted!');
+						console.log(`This form has a username of ${name.value}, an email of ${email.value}, a password of ${password.value} and confirm password of ${confirmPassword.value}`);
+					}
+
+					// não está delcarado
+					/* if (!isValidEmail(email)) {
+						alert('Please, enter a valid e-mail address.');
+						return;
+					} */
+
+					if (password != confirmPassword) {
+						alert('The passwords do not match! Please try again.');
+						return;
+					}
+
+					// Dados validados, recolhidos para o backend:
+
+					const formData = {
+						name: name,
+						email: email,
+						password: password,
+						confirmPassword: confirmPassword,
+					};
+
+					try {
+						// const fetch = require('node-fetch');
+
+						// confirmar o http
+						const response = await fetch('http://localhost:3009/user/signup', {
+							method: 'POST',
+							headers: {
+								'Content-Type': 'application/json',
+							},
+							body: JSON.stringify(formData),
+						});
+
+						if (response.ok) {
+							// mandar dados para base de dados MongoDB e para a tabela HTML table_data
+							formData.send.tbody;
+							// A intenção é redirecionar para a página de Home a fazer já o QR Code pretendido
+							window.location.href = '/frontend/src/html/indexey.html';
+
+							console.log('User created with success!');
+						} else {
+							response.status(404).send('Erro ao criar utilizador! Tente novamente!');
+							console.log('Erro ao criar utilizador', response.statusText);
+						}
+					} catch (error) {
+						console.log('Erro de rede:', error);
+					}
+				});
+			});
+
+			/* function isValidEmail(email) {
+				const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+				return emailRegex.test(email);
+			} */
+
+			// Validação do formato de email (@)
+
+			/* const fetch = require('node-fetch'); */
+
+			/* const signin = async () => {
+				try {
+					const response = await fetch('http://localhost:3009/user/signin', {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json',
+							Accept: 'application/json',
+						},
+						body: JSON.stringify({
+							name: '',
+							mail: '',
+							password: '',
+							confirmPassword: '',
+						}),
+					});
+
+					// Name validate
+
+					let nameInput = document.querySelector('.name');
+					nameInput.addEventListener('input', () => {
+						if (nameInput.value.length < 3) {
+							nameInput.classList.add('is-invalid');
+						} else {
+							nameInput.classList.remove('is-invalid');
+						}
+					});
+
+					// Mail validate
+
+					let mailInput = document.querySelector('.email');
+					mailInput.addEventListener('input', () => {
+						if (!validateMail(mailInput.value)) {
+							mailInput.classList.add('is-invalid');
+						} else {
+							mailInput.classList.remove('is-invalid');
+						}
+					});
+
+					function validateMail(mail) {
+						// const mail = document.querySelector('.email');
+						const validation = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+						return validation.test(String(mail).toLowerCase());
+					}
+
+					// Password validate
+
+					let passwordInput = document.querySelector('.password');
+					passwordInput.addEventListener('input', () => {
+						if (passwordInput.value.length < 8) {
+							passwordInput.classList.add('is-invalid');
+						} else {
+							passwordInput.classList.remove('is-invalid');
+						}
+					});
+
+					if (!response.ok) {
+						throw new Error('Error: Something got wrong');
+					}
+
+					const data = await response.json();
+					console.log(data);
+				} catch (err) {
+					console.log(err);
+				}
+			};
+
+			addEventListener('submit', signin); */
+		</script>
+	</body>
+</html>
