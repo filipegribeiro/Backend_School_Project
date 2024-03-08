@@ -1,16 +1,17 @@
 /*------------------------------------------------------------------
 Project:	QR Code Gen Table
-Version:	0.1
-Last change:	28/02/2024
-Assigned to:	Filipe Ribeiro e Alexandre Barreira
+Version:	0.2
+Last change:	08/03/2024
+Assigned to:	Filipe Ribeiro
 -------------------------------------------------------------------*/
 
 /*------------------------------------------------------------------
 
-01. General Setting
+01. General Settings
 02. Header & Navigation
 03. Table Data
-04. Footer
+04. Modal
+05. Footer
 
 -------------------------------------------------------------------*/
 
@@ -239,7 +240,7 @@ button {
 	border: none;
 	border-radius: 5px;
 	cursor: pointer;
-	padding: 10px;
+	padding: 5px;
 	color: var(--text-color-light);
 }
 
@@ -389,7 +390,7 @@ tr:hover td {
 }
 
 /*--------------------------------------------------
-	06. Footer
+	05. Footer
 ---------------------------------------------------*/
 
 .footer {

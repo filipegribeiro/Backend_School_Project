@@ -3,7 +3,53 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Document</title>
+		<link rel="stylesheet" href="/src/ui/css/add_form.css" />
+		<title>New Client</title>
 	</head>
-	<body></body>
+	<body x-data="{ open: false }">
+		<section class="modal" x-show="open">
+			<div class="modal__overlay">
+				<div class="modal__overlay__1"></div>
+				<div class="modal__overlay__2"></div>
+			</div>
+			<div class="signin">
+				<div class="content">
+					<h2>Add / Edit Client</h2>
+					<div id="form" class="form">
+						<div class="inputBox">
+							<input type="text" id="name" value="" required />
+							<i>Name</i>
+						</div>
+						<div class="inputBox">
+							<input type="text" value="" required />
+							<i>NIF</i>
+						</div>
+						<div class="inputBox">
+							<input type="text" value="" required />
+							<i>Address</i>
+						</div>
+						<div class="inputBox">
+							<input type="email" id="mail" value="" required />
+							<i>Mail</i>
+						</div>
+						<div class="inputBox">
+							<input type="text" value="" required />
+							<i>Phone</i>
+						</div>
+						<div class="inputBox">
+							<input type="password" id="pass" value="" required />
+							<i>Password</i>
+						</div>
+						<div class="inputBox">
+							<input type="password" id="confirmPass" value="" required />
+							<i>Confirm Password</i>
+						</div>
+						<div class="inputBox">
+							<button id="submit_form" class="submit" type="submit">+ Add New</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</body>
 </html>

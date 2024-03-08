@@ -7,9 +7,8 @@
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap" rel="stylesheet" />
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-		<link href="/frontend/src/css/table_data.css" rel="stylesheet" />
-		<!-- Pages -->
-		<link rel="stylesheet" href="/frontend/src/html/signin_form.html" />
+		<link href="C:/Users/Utilizador/Documents/GitHub/QRCodeGenerator/frontend/src/css/table_data.css" rel="stylesheet" />
+		<link href="/src/ui/css/table_data.css" rel="stylesheet" />
 		<title>Table Clients</title>
 	</head>
 	<body>
@@ -17,11 +16,11 @@
 			<a class="logo" href="#hero">QRCode Gen</a>
 			<nav class="nav">
 				<ul class="navbar">
-					<li><a href="/frontend/src/html/indexey.html">Home</a></li>
+					<li><a href="/src/ui/indexey.html">Home</a></li>
 					<!-- <li><a href="#about/">About</a></li>
 					<li><a href="#FAQ">FAQ's</a></li>
 					<li><a href="#footer">Contact Us</a></li> -->
-					<li><a href="/frontend/src/html/signin_form.html">SigIn</a></li>
+					<li><a href="/src/ui/signin_form.html">SigIn</a></li>
 				</ul>
 				<!-- menu hamburger -->
 				<!-- <div id="webapp_cover">
@@ -42,181 +41,13 @@
 						<div>
 							<input placeholder="Client" type="text" required />
 							<!-- <i class="client">Client</i> -->
-							<button id="add_new" class="add_new">+ Add New</button>
+							<a href="/src/ui/add_form.html" id="add_new" class="add_new">+ Add New</a>
 						</div>
 					</div>
 					<div class="table_section">
-						<table>
-							<thead>
-								<tr>
-									<th>ID Number</th>
-									<th>Type of client</th>
-									<th>Display Name</th>
-									<th>NIF</th>
-									<th>Address</th>
-									<th>Email address</th>
-									<th>Phone</th>
-									<th>Last Login Date</th>
-									<th>Edit / Delete Profile</th>
-								</tr>
-							</thead>
-							<tbody id="table_data">
-								<!-- An header like in MongoDB with variables Name, Email, type of client, Last login Date?, EMail Last Verified Date?, and in each user, needs to have a edit and an delete button; -->
-								<tr>
-									<td>1</td>
-									<td>Company</td>
-									<td>Alex</td>
-									<td>123456789</td>
-									<td>Rua da Mouraria</td>
-									<td>alex@gmail.com</td>
-									<td>912345678</td>
-									<td>To be defined</td>
-									<td>
-										<button id="edit"><i class="fa-regular fa-pen-to-square"></i></button>
-										<button id="trash"><i class="fa-regular fa-trash-can"></i></button>
-									</td>
-								</tr>
-								<tr>
-									<td>2</td>
-									<td>Client</td>
-									<td>Filipe</td>
-									<td>244708770</td>
-									<td>Rua da Rodas</td>
-									<td>filipe@gmail.com</td>
-									<td>919875674</td>
-									<td>To be defined</td>
-									<td>
-										<button id="edit"><i class="fa-regular fa-pen-to-square"></i></button>
-										<button id="trash"><i class="fa-regular fa-trash-can"></i></button>
-									</td>
-								</tr>
-								<tr>
-									<td>3</td>
-									<td>Client</td>
-									<td>Ana</td>
-									<td>255678456</td>
-									<td>Rua da S. Paio</td>
-									<td>anast@gmail.com</td>
-									<td>914563456</td>
-									<td>To be defined</td>
-									<td>
-										<button id="edit"><i class="fa-regular fa-pen-to-square"></i></button>
-										<button id="trash"><i class="fa-regular fa-trash-can"></i></button>
-									</td>
-								</tr>
-								<tr>
-									<td>4</td>
-									<td>Company</td>
-									<td>Victor</td>
-									<td>555789687</td>
-									<td>Rua de Outeiro Velho</td>
-									<td>victor.r@gmail.com</td>
-									<td>934567893</td>
-									<td>To be defined</td>
-									<td>
-										<button id="edit"><i class="fa-regular fa-pen-to-square"></i></button>
-										<button id="trash"><i class="fa-regular fa-trash-can"></i></button>
-									</td>
-								</tr>
-								<tr>
-									<td>5</td>
-									<td>Client</td>
-									<td>Benedita</td>
-									<td>236785432</td>
-									<td>Rua de Areis finas</td>
-									<td>BeneditaN@gmail.com</td>
-									<td>967865433</td>
-									<td>To be defined</td>
-									<td>
-										<button id="edit"><i class="fa-regular fa-pen-to-square"></i></button>
-										<button id="trash"><i class="fa-regular fa-trash-can"></i></button>
-									</td>
-								</tr>
-								<tr>
-									<td>6</td>
-									<td>Company</td>
-									<td>Maria</td>
-									<td>787456372</td>
-									<td>Rua da Ourora</td>
-									<td>mariag@gmail.com</td>
-									<td>914563728</td>
-									<td>To be defined</td>
-									<td>
-										<button id="edit"><i class="fa-regular fa-pen-to-square"></i></button>
-										<button id="trash"><i class="fa-regular fa-trash-can"></i></button>
-									</td>
-								</tr>
-								<tr>
-									<td>7</td>
-									<td>Client</td>
-									<td>José</td>
-									<td>244476321</td>
-									<td>Rua da Coutada Velha</td>
-									<td>jose.r@gmail.com</td>
-									<td>934567321</td>
-									<td>To be defined</td>
-									<td>
-										<button id="edit"><i class="fa-regular fa-pen-to-square"></i></button>
-										<button id="trash"><i class="fa-regular fa-trash-can"></i></button>
-									</td>
-								</tr>
-								<tr>
-									<td>8</td>
-									<td>Company</td>
-									<td>Luis R.</td>
-									<td>547987654</td>
-									<td>Rua de Sá</td>
-									<td>luis.sa@gmail.com</td>
-									<td>916758432</td>
-									<td>To be defined</td>
-									<td>
-										<button id="edit"><i class="fa-regular fa-pen-to-square"></i></button>
-										<button id="trash"><i class="fa-regular fa-trash-can"></i></button>
-									</td>
-								</tr>
-								<tr>
-									<td>9</td>
-									<td>Client</td>
-									<td>Melanie</td>
-									<td>567489378</td>
-									<td>Rua da Foz</td>
-									<td>melanie@gmail.com</td>
-									<td>914637829</td>
-									<td>To be defined</td>
-									<td>
-										<button id="edit"><i class="fa-regular fa-pen-to-square"></i></button>
-										<button id="trash"><i class="fa-regular fa-trash-can"></i></button>
-									</td>
-								</tr>
-								<tr>
-									<td>10</td>
-									<td>Client</td>
-									<td>André</td>
-									<td>234565432</td>
-									<td>Rua da Pedra Nova</td>
-									<td>andré@gmail.com</td>
-									<td>936473829</td>
-									<td>To be defined</td>
-									<td>
-										<button id="edit"><i class="fa-regular fa-pen-to-square"></i></button>
-										<button id="trash"><i class="fa-regular fa-trash-can"></i></button>
-									</td>
-								</tr>
-								<tr>
-									<td>11</td>
-									<td>Client</td>
-									<td>Élton</td>
-									<td>212345675</td>
-									<td>Rua da Era</td>
-									<td>eltons@gmail.com</td>
-									<td>926875645</td>
-									<td>To be defined</td>
-									<td>
-										<button id="edit"><i class="fa-regular fa-pen-to-square"></i></button>
-										<button id="trash"><i class="fa-regular fa-trash-can"></i></button>
-									</td>
-								</tr>
-							</tbody>
+						<table id="target">
+							<thead></thead>
+							<tbody></tbody>
 						</table>
 					</div>
 					<div class="pagination">
@@ -240,25 +71,73 @@
 			</ul>
 		</footer>
 		<script>
-			// Delete Button
 			document.addEventListener('DOMContentLoaded', () => {
-				// Agarrar todos os botões com o id "trash"
-				const trashBtns = document.querySelectorAll('#table_data #trash');
-
-				// Iterando sobre todos os botões "trash"
-				trashBtns.forEach(btn => {
-					// Adicionando um clique de evento a cada botão "trash"
-					btn.addEventListener('click', function () {
-						// Agarrar o elemento pai (tr) do botão "trash" clicado
-						const row = this.closest('tr');
-
-						// Verificando se o elemento pai (tr) foi encontrado e se sim removê-lo
-						if (row) {
-							row.remove();
-						}
-					});
-				});
+				loadTable();
 			});
+			async function loadTable() {
+				let result = await fetch('http://localhost:3003/user', {
+					method: 'GET',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+				});
+				var userList = await result.json();
+				renderObjectsToTable(userList, '#target');
+			}
+			function renderObjectsToTable(objects, target) {
+				const uniquePropertyNames = [];
+				objects.forEach(obj => {
+					for (const prop in obj) {
+						if (!uniquePropertyNames.includes(prop)) uniquePropertyNames.push(prop);
+					}
+				});
+
+				uniquePropertyNames.splice(uniquePropertyNames.indexOf('_id'), 1);
+				uniquePropertyNames.splice(uniquePropertyNames.indexOf('company_id'), 1);
+				uniquePropertyNames.splice(uniquePropertyNames.indexOf('password'), 1);
+				uniquePropertyNames.splice(uniquePropertyNames.indexOf('confirmPassword'), 1);
+
+				const header = buildTableHeader(uniquePropertyNames);
+				const rows = buildTableBody(uniquePropertyNames, objects);
+				const table = document.querySelector(target);
+				table.querySelector('thead').append(header);
+				table.querySelector('tbody').append(...rows);
+			}
+			function buildTableHeader(propertyNames) {
+				const headerRow = document.createElement('tr');
+				propertyNames.forEach(prop => {
+					const headerCell = document.createElement('th');
+					headerCell.innerText = prop;
+					headerRow.append(headerCell);
+				});
+				const headerCell = document.createElement('th');
+				headerCell.innerText = 'XXX';
+				headerRow.append(headerCell);
+				return headerRow;
+			}
+
+			function buildTableBody(propertyNames, objects) {
+				const tableRows = [];
+				objects.forEach(obj => {
+					const currentRow = document.createElement('tr');
+					propertyNames.forEach(prop => {
+						const tableCell = document.createElement('td');
+						const value = obj[prop] === undefined ? '' : obj[prop];
+						tableCell.innerText = value;
+						currentRow.append(tableCell);
+					});
+
+					const tableCell = document.createElement('td');
+					const link = document.createElement('a');
+					link.href = `add_form.html?id=${obj['_id']}`;
+					link.innerText = 'Edit';
+					tableCell.append(link);
+					currentRow.append(tableCell);
+
+					tableRows.push(currentRow);
+				});
+				return tableRows;
+			}
 		</script>
 	</body>
 </html>

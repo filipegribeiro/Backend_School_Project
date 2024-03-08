@@ -12,6 +12,8 @@
 	--text-color-input: #aaa;
 	--background-secondary: #aaff00;
 	--hover-color: #ffff;
+
+	--ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 /* Font import and global reset */
@@ -78,13 +80,73 @@ html {
 
 /* Body styling */
 body {
+	/* position: absolute; */
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	min-height: 100vh;
-	background: var(--background-primary);
+	background: var(--background-secondary);
 	text-rendering: optimizeLegibility;
 	-webkit-font-smoothing: antialiased;
+}
+
+.modal {
+	/* position: absolute; */
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 1000;
+}
+
+.modal__overlay {
+	/* position: absolute; */
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	pointer-events: none;
+	z-index: 250;
+}
+
+.modal__overlay__1 {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 50%;
+	width: 100%;
+	background: #000;
+	animation-name: slide;
+	animation-duration: 1.2s;
+	animation-timing-function: var(--ease);
+	animation-fill-mode: both;
+	transform-origin: top;
+}
+
+.modal__overlay__2 {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	height: 50%;
+	width: 100%;
+	background: #000;
+	animation-name: slide;
+	animation-duration: 1.2s;
+	animation-timing-function: var(--ease);
+	animation-fill-mode: both;
+	transform-origin: bottom;
+}
+
+@keyframes slide {
+	0% {
+		transform: scaleY(0);
+	}
+	50% {
+		transform: scaleY(1);
+	}
+	100% {
+		transform: scaleY(0);
+	}
 }
 
 /* Section styles */
@@ -109,73 +171,8 @@ section::before {
 	height: 2px;
 }
 
-/* Animation keyframes */
-/* @keyframes animate {
-	0% {
-		transform: translateY(-100%);
-	}
-	100% {
-		transform: translateY(100%);
-	}
-} */
-
-@keyframes animLine {
-	0%,
-	100% {
-		top: 18px;
-	}
-	50% {
-		top: calc(100% - 18px);
-	}
-}
-
 /*--------------------------------------------------
-	02. Header & Navigation
----------------------------------------------------*/
-
-.header {
-	position: fixed;
-	width: 100%;
-	top: 0;
-	left: 0;
-	box-sizing: border-box;
-	height: 70px;
-	padding: 2.5rem;
-	background: var(--background-primary);
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	z-index: 100;
-}
-
-.logo {
-	font-size: 2.5rem;
-	font-weight: bold;
-}
-
-header a {
-	font-weight: bold;
-	color: var(--background-secondary);
-}
-
-a:hover {
-	color: var(--hover-color);
-	border-radius: 2px;
-	transition: 0.5s;
-}
-
-/* verificar neste ponto abaixo para o tamanho das âncoras */
-
-.nav,
-.navbar {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	gap: 1.5rem;
-}
-
-/*--------------------------------------------------
-	03. Signin / Signup Form
+	02. Signin / Signup Form
 ---------------------------------------------------*/
 
 /* Sign-in form styles */
@@ -193,11 +190,24 @@ a:hover {
 	align-items: center;
 	padding: 40px;
 	border-radius: 4px;
-	box-shadow: 0 15px 35px rgba(0, 0, 0, 0.9);
+	box-shadow: 0 45px 55px rgba(0, 0, 0, 0.9);
+	animation: animImg 1.3s;
+}
+
+@keyframes animImg {
+	0% {
+		transform: scaleY(0);
+	}
+	50% {
+		transform: scaleY(0);
+	}
+	100% {
+		transform: scaleY(1);
+	}
 }
 
 .signin .content {
-	position: relative;
+	/* position: relative; */
 	width: 100%;
 	display: flex;
 	justify-content: center;
@@ -282,13 +292,11 @@ a:hover {
 	letter-spacing: 0.05em;
 	cursor: pointer;
 }
-
 .content .form .inputBox input[type='submit']:hover {
 	background: var(--background-primary);
 	color: var(--hover-color);
 	cursor: pointer;
 }
-
 input[type='submit']:active {
 	opacity: 0.6;
 } */
@@ -339,71 +347,4 @@ input[type='submit']:active {
 		width: calc(20vw - 2px);
 		height: calc(20vw - 2px);
 	}
-}
-
-/*--------------------------------------------------
-	06. Footer
----------------------------------------------------*/
-
-.footer {
-	width: 100%;
-	position: absolute;
-	display: inline-block;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	background-color: var(--background-secondary);
-	gap: 1.5rem;
-	font-weight: 300;
-	font-size: 1rem;
-	padding: 1.75rem 5rem;
-}
-
-.footer ul {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	gap: 1.5rem;
-	color: var(--text-color-dark);
-}
-
-@media (max-width: 800px) {
-	.footer {
-		padding: 1.75rem 1rem;
-	}
-}
-
-.footer p,
-a {
-	text-decoration: none;
-	color: var(--text-color-dark);
-	font-weight: 600;
-	font-size: 1rem;
-}
-
-.facebook:hover {
-	color: #3b5998;
-	box-shadow: #3b5998;
-	transition: 0.5s;
-}
-
-.instagram:hover {
-	color: #ffa500;
-	box-shadow: #ffa500;
-	transition: 0.5s;
-}
-
-.linkedin:hover {
-	color: #0e76a8;
-	box-shadow: #0e76a8;
-	transition: 0.5s;
-}
-
-.youtube:hover {
-	color: #c4302b;
-	box-shadow: #c4302b;
-	transition: 0.5s;
 }
