@@ -7,6 +7,27 @@
 		<title>New Client</title>
 	</head>
 	<body x-data="{ open: false }">
+		<header class="header">
+			<a class="logo" href="#hero">QRCode Gen</a>
+			<nav class="nav">
+				<ul class="navbar">
+					<li><a href="/src/ui/indexey.html">Home</a></li>
+					<!-- <li><a href="#about">About</a></li>
+					<li><a href="#FAQ">FAQ's</a></li>
+					<li><a href="#footer">Contact Us</a></li> -->
+					<li><a href="/src/ui/signin_form.html">SigIn</a></li>
+				</ul>
+				<!-- menu hamburger -->
+				<!-- <div id="webapp_cover">
+					<div id="menu_button">
+						<input type="checkbox" id="menu_checkbox" />
+						<label for="menu_checkbox" id="menu_label">
+							<div id="menu_text_bar"></div>
+						</label>
+					</div>
+				</div> -->
+			</nav>
+		</header>
 		<section class="modal" x-show="open">
 			<div class="modal__overlay">
 				<div class="modal__overlay__1"></div>
@@ -51,5 +72,14 @@
 				</div>
 			</div>
 		</section>
+		<footer id="footer" class="footer">
+			<p>2024 an X Company Website, All Rights Reserved</p>
+			<ul>
+				<li><a href="#" class="facebook">Facebook</a></li>
+				<li><a href="#" class="instagram">Instagram</a></li>
+				<li><a href="#" class="linkedin">Linkedin</a></li>
+				<li><a href="#" class="youtube">Youtube</a></li>
+			</ul>
+		</footer>
 	</body>
 </html>

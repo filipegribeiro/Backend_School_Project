@@ -25,7 +25,7 @@
 	padding: 0;
 	box-sizing: border-box;
 	font-family: 'Fira Code', monospace;
-	/* border: 1px solid orange; */
+	border: 1px solid orange;
 }
 
 a {
@@ -172,7 +172,52 @@ section::before {
 }
 
 /*--------------------------------------------------
-	02. Signin / Signup Form
+	02. Header & Navigation
+---------------------------------------------------*/
+
+.header {
+	position: fixed;
+	width: 100%;
+	top: 0;
+	left: 0;
+	box-sizing: border-box;
+	height: 70px;
+	padding: 2.5rem;
+	background: var(--background-primary);
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	z-index: 100;
+}
+
+.logo {
+	font-size: 2.5rem;
+	font-weight: bold;
+}
+
+header a {
+	font-weight: bold;
+	color: var(--background-secondary);
+}
+
+a:hover {
+	color: var(--hover-color);
+	border-radius: 2px;
+	transition: 0.5s;
+}
+
+/* verificar neste ponto abaixo para o tamanho das âncoras */
+
+.nav,
+.navbar {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 1.5rem;
+}
+
+/*--------------------------------------------------
+	03. Add / Edit Client
 ---------------------------------------------------*/
 
 /* Sign-in form styles */
@@ -347,4 +392,71 @@ input[type='submit']:active {
 		width: calc(20vw - 2px);
 		height: calc(20vw - 2px);
 	}
+}
+
+/*--------------------------------------------------
+	04. Footer
+---------------------------------------------------*/
+
+.footer {
+	width: 100%;
+	position: absolute;
+	display: inline-block;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background-color: var(--background-primary);
+	gap: 1.5rem;
+	font-weight: 300;
+	font-size: 1rem;
+	padding: 1.75rem 5rem;
+}
+
+.footer ul {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 1.5rem;
+	color: var(--background-secondary);
+}
+
+@media (max-width: 800px) {
+	.footer {
+		padding: 1.75rem 1rem;
+	}
+}
+
+.footer p,
+a {
+	text-decoration: none;
+	color: var(--background-secondary);
+	font-weight: 600;
+	font-size: 1rem;
+}
+
+.facebook:hover {
+	color: #3b5998;
+	box-shadow: #3b5998;
+	transition: 0.5s;
+}
+
+.instagram:hover {
+	color: #ffa500;
+	box-shadow: #ffa500;
+	transition: 0.5s;
+}
+
+.linkedin:hover {
+	color: #0e76a8;
+	box-shadow: #0e76a8;
+	transition: 0.5s;
+}
+
+.youtube:hover {
+	color: #c4302b;
+	box-shadow: #c4302b;
+	transition: 0.5s;
 }

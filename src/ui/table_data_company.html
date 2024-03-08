@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap" rel="stylesheet" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+		<link href="C:/Users/Utilizador/Documents/GitHub/QRCodeGenerator/frontend/src/css/table_data.css" rel="stylesheet" />
+		<link href="/src/ui/css/table_data.css" rel="stylesheet" />
+		<title>Data Companies</title>
+	</head>
+	<body>
+		<header class="header">
+			<a class="logo" href="#hero">QRCode Gen</a>
+			<nav class="nav">
+				<ul class="navbar">
+					<li><a href="/src/ui/indexey.html">Home</a></li>
+					<!-- <li><a href="#about/">About</a></li>
+					<li><a href="#FAQ">FAQ's</a></li>
+					<li><a href="#footer">Contact Us</a></li> -->
+					<li><a href="/src/ui/signin_form.html">SigIn</a></li>
+				</ul>
+				<!-- menu hamburger -->
+				<!-- <div id="webapp_cover">
+					<div id="menu_button">
+						<input type="checkbox" id="menu_checkbox" />
+						<label for="menu_checkbox" id="menu_label">
+							<div id="menu_text_bar"></div>
+						</label>
+					</div>
+				</div> -->
+			</nav>
+		</header>
+		<main>
+			<section>
+				<div class="table">
+					<div class="table_header">
+						<p>Data Companies</p>
+						<div>
+							<input placeholder="Client" type="text" required />
+							<a href="/src/ui/add_form.html" id="add_new" class="add_new">+ Add New</a>
+						</div>
+					</div>
+					<div class="table_section">
+						<table id="target">
+							<thead></thead>
+							<tbody></tbody>
+						</table>
+					</div>
+					<div class="pagination">
+						<div><i class="fa-solid fa-backward-fast"></i></div>
+						<div><i class="fa-solid fa-backward"></i></div>
+						<div>1</div>
+						<div>2</div>
+						<div><i class="fa-solid fa-forward"></i></div>
+						<div><i class="fa-solid fa-forward-fast"></i></div>
+					</div>
+				</div>
+			</section>
+		</main>
+		<footer id="footer" class="footer">
+			<p>2024 an Engage Consulting Website, All Rights Reserved</p>
+			<ul>
+				<li><a href="#" class="facebook">Facebook</a></li>
+				<li><a href="#" class="instagram">Instagram</a></li>
+				<li><a href="#" class="linkedin">Linkedin</a></li>
+				<li><a href="#" class="youtube">Youtube</a></li>
+			</ul>
+		</footer>
+		<script>
+			document.addEventListener('DOMContentLoaded', () => {
+				loadTable();
+			});
+			async function loadTable() {
+				let result = await fetch('http://localhost:3003/user', {
+					method: 'GET',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+				});
+				var userList = await result.json();
+				renderObjectsToTable(userList, '#target');
+			}
+			function renderObjectsToTable(objects, target) {
+				const uniquePropertyNames = [];
+				objects.forEach(obj => {
+					for (const prop in obj) {
+						if (!uniquePropertyNames.includes(prop)) uniquePropertyNames.push(prop);
+					}
+				});
+
+				uniquePropertyNames.splice(uniquePropertyNames.indexOf('_id'), 1);
+				uniquePropertyNames.splice(uniquePropertyNames.indexOf('company_id'), 1);
+				uniquePropertyNames.splice(uniquePropertyNames.indexOf('password'), 1);
+				uniquePropertyNames.splice(uniquePropertyNames.indexOf('confirmPassword'), 1);
+
+				const header = buildTableHeader(uniquePropertyNames);
+				const rows = buildTableBody(uniquePropertyNames, objects);
+				const table = document.querySelector(target);
+				table.querySelector('thead').append(header);
+				table.querySelector('tbody').append(...rows);
+			}
+			function buildTableHeader(propertyNames) {
+				const headerRow = document.createElement('tr');
+				propertyNames.forEach(prop => {
+					const headerCell = document.createElement('th');
+					headerCell.innerText = prop;
+					headerRow.append(headerCell);
+				});
+				const headerCell = document.createElement('th');
+				headerCell.innerText = 'XXX';
+				headerRow.append(headerCell);
+				return headerRow;
+			}
+
+			function buildTableBody(propertyNames, objects) {
+				const tableRows = [];
+				objects.forEach(obj => {
+					const currentRow = document.createElement('tr');
+					propertyNames.forEach(prop => {
+						const tableCell = document.createElement('td');
+						const value = obj[prop] === undefined ? '' : obj[prop];
+						tableCell.innerText = value;
+						currentRow.append(tableCell);
+					});
+
+					const tableCell = document.createElement('td');
+					const link = document.createElement('a');
+					link.href = `add_form.html?id=${obj['_id']}`;
+					link.innerText = 'Edit';
+					tableCell.append(link);
+					currentRow.append(tableCell);
+
+					tableRows.push(currentRow);
+				});
+				return tableRows;
+			}
+		</script>
+	</body>
+</html>
