@@ -4,7 +4,7 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="stylesheet" href="/src/ui/css/add_form.css" />
-		<title>New Client</title>
+		<title>Add / Edit Client</title>
 	</head>
 	<body x-data="{ open: false }">
 		<header class="header">
@@ -42,11 +42,11 @@
 							<i>Name</i>
 						</div>
 						<div class="inputBox">
-							<input type="text" value="" required />
+							<input type="text" id="nif" required />
 							<i>NIF</i>
 						</div>
 						<div class="inputBox">
-							<input type="text" value="" required />
+							<input type="text" id="address" required />
 							<i>Address</i>
 						</div>
 						<div class="inputBox">
@@ -54,7 +54,7 @@
 							<i>Mail</i>
 						</div>
 						<div class="inputBox">
-							<input type="text" value="" required />
+							<input type="text" id="phone" required />
 							<i>Phone</i>
 						</div>
 						<div class="inputBox">
@@ -81,5 +81,123 @@
 				<li><a href="#" class="youtube">Youtube</a></li>
 			</ul>
 		</footer>
+		<script>
+			//    *** ADD / EDIT PROCESS ***
+
+			document.addEventListener('DOMContentLoaded', () => {
+				const signupForm = document.getElementById('form');
+				const button = document.getElementById('submit_form');
+
+				const _searchParams = new URLSearchParams(location.search);
+				let item_id = null;
+				if (_searchParams.has('id')) {
+					item_id = _searchParams.get('id');
+				}
+
+				if (item_id != null) {
+					loadData(item_id);
+				}
+
+				async function get_item_to_update(item) {
+					document.getElementById('name').value = item.name;
+					document.getElementById('nif').value = item.nif;
+				}
+				async function loadData(id, data, data) {
+					let result = await fetch(`http://localhost:3003/user/${id}`, {
+						method: 'GET',
+						headers: {
+							'Content-Type': 'application/json',
+						},
+					});
+					var user = await result.json();
+					get_item_to_update(user);
+				}
+
+				button.addEventListener('click', async event => {
+					event.preventDefault();
+					const name = document.getElementById('name').value;
+					const nif = document.getElementById('nif').value;
+					const address = document.getElementById('address').value;
+					const email = document.getElementById('mail').value;
+					const phone = document.getElementById('phone').value;
+					const password = document.getElementById('pass').value;
+					const confirmPassword = document.getElementById('confirmPass').value;
+
+					// Dados validados, recolhidos para o backend:
+
+					const formData = {
+						name: name,
+						nif: nif,
+						address: address,
+						email: email,
+						phone: phone,
+						password: password,
+						confirmPassword: confirmPassword,
+					};
+					//decide if create or update
+
+					if (item_id == null) {
+						create_button(formData);
+					} else {
+						update_button(formData);
+					}
+				});
+				async function update_button(formData) {
+					try {
+						// confirmar o http
+						const response = await fetch('http://localhost:3003/user', {
+							method: 'PATCH',
+							headers: {
+								'Content-Type': 'application/json',
+							},
+							body: JSON.stringify(formData),
+						});
+
+						if (response.ok) {
+							// mandar dados para base de dados MongoDB e para a tabela HTML table_data
+							formData.send.tbody;
+							// A intenção é redirecionar para a página de Home a fazer já o QR Code pretendido
+							window.location.href = '/src/ui/table_data_users.html';
+
+							response.status(200).send('User updated / created with success!');
+							console.log('User created with success!');
+						} else {
+							response.status(404).send('Erro ao criar utilizador! Tente novamente!');
+							console.log('Erro ao criar utilizador', response.statusText);
+						}
+					} catch (error) {
+						console.log('Erro de rede:', error);
+					}
+				}
+
+				async function create_button(formData) {
+					try {
+						// confirmar o http
+						const response = await fetch('http://localhost:3003/user', {
+							method: 'POST',
+							headers: {
+								'Content-Type': 'application/json',
+							},
+							body: JSON.stringify(formData),
+						});
+
+						if (response.ok) {
+							// mandar dados para base de dados MongoDB e para a tabela HTML table_data
+							formData.send.tbody;
+							// A intenção é redirecionar para a página de Home a fazer já o QR Code pretendido
+							window.location.href = '/src/ui/table_data_users.html';
+
+							response.status(200).send('User updated / created with success!');
+							console.log('User created with success!');
+						} else {
+							response.status(404).send('Erro ao criar utilizador! Tente novamente!');
+							console.log('Erro ao criar utilizador', response.statusText);
+						}
+					} catch (error) {
+						console.log('Erro de rede:', error);
+					}
+				}
+			});
+		</script>
 	</body>
 </html>
