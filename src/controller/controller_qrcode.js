@@ -1,5 +1,5 @@
 'use strict';
-
+const service_mongodb = require('../services/mongodb_service.js');
 var qrcodes = [];
 const controllers = {
 	create: async function (req, res) {
@@ -97,6 +97,7 @@ const controllers = {
 	},
 
 	list: async function (req, res) {
+		let qrcodes = await service_mongodb.list('qrcode');
 		res.status(200).json(qrcodes);
 	},
 };

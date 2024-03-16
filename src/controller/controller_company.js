@@ -1,123 +1,131 @@
 'use strict';
 const service_mongodb = require('../services/mongodb_service.js');
-var companies = [];
+var users = [];
 const controllers = {
+	signup: async function (req, res) {
+		try {
+			req.body.company_id = 1;
+			await controllers.create(req, res);
+			return;
+		} catch (err) {
+			res.status(500).send(err);
+		}
+	},
+
+	signin: async function (req, res) {
+		try {
+			req.body.company_id = 1;
+			await controllers.create(req, res);
+			return;
+		} catch (err) {
+			res.status(500).send(err);
+		}
+	},
+
 	create: async function (req, res) {
-		let companyData = req.body;
+		let userData = req.body;
 
-		if (!companyData.name || companyData.name.lenght < 10) {
-			res.status(404).send('Company Name is required and should be at least 10 characters long');
-			return;
-		}
+		//* data do registo do user
+		userData.registrationDate = new Date().toISOString();
 
-		if (!companyData.nif || companyData.nif.lenght < 9) {
-			res.status(404).send('Company NIF is required and should be at least 9 characters long');
-			return;
-		}
+		// users.push(req.body);
+		await service_mongodb.create('company', userData);
 
-		if (!companyData.address) {
-			res.status(404).send('Company Address is required');
-			return;
-		}
-
-		if (!companyData.mail) {
-			res.status(404).send('Company Mail is required');
-			return;
-		}
-
-		if (!companyData.phone) {
-			res.status(404).send('Company Phone is required');
-			return;
-		}
-
-		//* data do registo da empresa
-		companyData.registrationDate = new Date().toISOString();
-
-		//* Lógica para validar e armazenar os dados no backend
-		companies.push(companyData);
-		await service_mongodb.create('company', companyData);
-
-		res.status(201).json(companyData);
+		res.status(201).json(req.body);
 	},
-
 	read: async function (req, res) {
-		//* colocação de uma tabela em MySQL (CREATE TABLE companies();)
-		let id = parseInt(req.params.id); //* Obtenção do ID da empresa
-		//let companyReaded = companies.find(x => x.id == id); //* Filtragem da empresa
+		try {
+			//let id = parseInt(req.params.id);
+			let id = req.params.id.trim();
+			// let userReaded = users.filter(x => x.id == req.query.id);
 
-		let companyReaded = await service_mongodb.read('company', id);
-		if (!companyReaded || !companyReaded.id) {
-			res.status(404).send('Company not found');
-			return; //* Verificação da existência da empresa
+			let userReaded = await service_mongodb.read('company', id);
+
+			if (!userReaded) {
+				res.status(404).send('Company not found');
+				return;
+			}
+			res.status(200).json(userReaded);
+		} catch (error) {
+			console.log(error);
+			return res.status(500).send('Internal Server Error');
 		}
-		res.status(200).json(companyReaded);
 	},
+
 	update: async function (req, res) {
-		let id = parseInt(req.params.id); //* Obtém o ID da empresa a ser atualizado
-		// let updateData = req.body; //* Obtém os novos dados da empresa do corpo da requisição
+		try {
+			let id = req.params.id; //* Obtém o ID do user a ser atualizado
 
-		//* Encontra a empresa na lista de empresas pelo ID
-		// let companyToUpdate = companies.find(x => x.id === id);
+			let updateData = req.body; //* Obtém os novos dados do user do corpo da requisição
+			console.log('Company ID:', id);
 
-		let updateData = req.body;
+			//* Encontra o user na lista de empresas pelo ID
+			//let userToUpdate = users.find(x => x.id === id);
+			let userToUpdate = await service_mongodb.update('company', id, updateData);
+			console.log('Company to update:', userToUpdate);
 
-		let companyToUpdate = {};
+			//* Verifica se o user existe
+			if (!userToUpdate) {
+				res.status(404).send('Company not found');
+				return;
+			}
 
-		//* Atualiza os campos específicos, se forem fornecidos no corpo da requisição
-		if (updateData.name) {
-			companyToUpdate.name = updateData.name;
-		}
-		if (updateData.nif) {
-			companyToUpdate.nif = updateData.nif;
-		}
-		if (updateData.address) {
-			companyToUpdate.address = updateData.address;
-		}
-		if (updateData.mail) {
-			companyToUpdate.mail = updateData.mail;
-		}
-		if (updateData.phone) {
-			companyToUpdate.phone = updateData.phone;
-		}
+			//* Atualiza os campos específicos, se forem fornecidos no corpo da requisição
+			if (updateData.name) {
+				userToUpdate.name = updateData.name;
+			}
 
-		companyToUpdate = await service_mongodb.update('company', id, companyToUpdate);
+			if (updateData.nif) {
+				userToUpdate.nif = updateData.nif;
+			}
 
-		//* Verifica se a empresa existe
-		if (!companyToUpdate || companyToUpdate.id) {
-			res.status(404).send('Company not found');
-			return;
+			if (updateData.address) {
+				userToUpdate.address = updateData.address;
+			}
+
+			if (updateData.mail) {
+				userToUpdate.mail = updateData.mail;
+			}
+
+			if (updateData.phone) {
+				userToUpdate.phone = updateData.phone;
+			}
+
+			if (updateData.password) {
+				userToUpdate.password = updateData.password;
+			}
+
+			if (updateData.confirmPassword) {
+				userToUpdate.confirmPassword = updateData.confirmPassword;
+			}
+
+			return res.json(userToUpdate);
+		} catch (error) {
+			console.log(error);
+			return res.status(500).send('Internal Server Error');
 		}
-		res.status(200).json(companyToUpdate);
 	},
 
 	delete: async function (req, res) {
-		let id = parseInt(req.params.id); //* Obtém o ID da empresa a ser excluído
+		try {
+			let id = req.params.id;
 
-		//* Encontra o índice da empresa na lista de empresas pelo ID, substitui um for ou forEach por esxemplo:
+			let deletedUser = await service_mongodb.del('company', id);
 
-		//let index = companies.findIndex(x => x.id === id);
+			if (!deletedUser) {
+				return res.status(404).send('Company not found');
+			}
 
-		let deleteCompany = await service_mongodb.del('company', id);
-
-		//* Verifica se a empresa existe: index === -1 através do findIndex, verifica se o índice da empresa existe, retornando -1 caso não exista.
-		if (!deleteCompany) {
-			res.status(404).send('Company not found');
-			return;
+			return res.status(200).json(deletedUser);
+		} catch (error) {
+			console.log(error);
+			return res.status(500).send('Internal Server Error');
 		}
-		/* if (index === -1) {
-			res.status(404).send('Company not found');
-			return;
-		} */
-
-		//* Remove a empresa da lista
-		// let deleteCompany = companies.slice(index, 1);
-
-		res.status(200).json(deleteCompany); //* E assim retorna o JSON da empresa excluída
 	},
 
 	list: async function (req, res) {
-		let companies = await service_mongodb.list('company');
-		res.status(200).json(companies);
+		let users = await service_mongodb.list('company');
+		res.status(200).json(users);
 	},
 };
 

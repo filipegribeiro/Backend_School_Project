@@ -7,11 +7,11 @@ const router = express.Router();
 //CREATE
 router.post('/', controllers.create);
 //READ
-router.get('/id', controllers.read);
+router.get('/', controllers.read);
 //UPDATE
-router.patch('/id', controllers.update);
+router.patch('/', controllers.update);
 //DELETE
-router.delete('/id', controllers.delete);
+router.delete('/', controllers.delete);
 //LIST
 router.get('/list', controllers.list);
 

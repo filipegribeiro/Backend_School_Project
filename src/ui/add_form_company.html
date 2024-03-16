@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="/css/add_form.css" />
+		<title>Add / Edit Company</title>
+	</head>
+	<body x-data="{ open: false }">
+		<header class="header">
+			<a class="logo" href="#hero">QRCode Gen</a>
+			<nav class="nav">
+				<ul class="navbar">
+					<li><a href="indexey.html">Home</a></li>
+					<!-- <li><a href="#about">About</a></li>
+					<li><a href="#FAQ">FAQ's</a></li>
+					<li><a href="#footer">Contact Us</a></li> -->
+					<li><a href="signin_form.html">SigIn</a></li>
+				</ul>
+				<!-- menu hamburger -->
+				<!-- <div id="webapp_cover">
+					<div id="menu_button">
+						<input type="checkbox" id="menu_checkbox" />
+						<label for="menu_checkbox" id="menu_label">
+							<div id="menu_text_bar"></div>
+						</label>
+					</div>
+				</div> -->
+			</nav>
+		</header>
+		<section class="modal" x-show="open">
+			<div class="modal__overlay">
+				<div class="modal__overlay__1"></div>
+				<div class="modal__overlay__2"></div>
+			</div>
+			<div class="signin">
+				<div class="content">
+					<h2>Add / Edit Company</h2>
+					<div id="form" class="form">
+						<div class="inputBox">
+							<input type="text" id="name" value="" required />
+							<i>Name</i>
+						</div>
+						<div class="inputBox">
+							<input type="text" id="nif" required />
+							<i>NIF</i>
+						</div>
+						<div class="inputBox">
+							<input type="text" id="address" required />
+							<i>Address</i>
+						</div>
+						<div class="inputBox">
+							<input type="email" id="mail" value="" required />
+							<i>Mail</i>
+						</div>
+						<div class="inputBox">
+							<input type="text" id="phone" required />
+							<i>Phone</i>
+						</div>
+						<div class="inputBox">
+							<input type="password" id="pass" value="" required />
+							<i>Password</i>
+						</div>
+						<div class="inputBox">
+							<input type="password" id="confirmPass" value="" required />
+							<i>Confirm Password</i>
+						</div>
+						<div class="inputBox">
+							<button id="submit_form" class="submit" type="submit">+ Add New</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<footer id="footer" class="footer">
+			<p>2024 an X Company Website, All Rights Reserved</p>
+			<ul>
+				<li><a href="#" class="facebook">Facebook</a></li>
+				<li><a href="#" class="instagram">Instagram</a></li>
+				<li><a href="#" class="linkedin">Linkedin</a></li>
+				<li><a href="#" class="youtube">Youtube</a></li>
+			</ul>
+		</footer>
+		<script>
+			//    *** ADD / EDIT PROCESS ***
+
+			document.addEventListener('DOMContentLoaded', () => {
+				const signupForm = document.getElementById('form');
+				const button = document.getElementById('submit_form');
+
+				const _searchParams = new URLSearchParams(location.search);
+				let item_id = null;
+				if (_searchParams.has('id')) {
+					item_id = _searchParams.get('id');
+				}
+
+				if (item_id != null) {
+					loadData(item_id);
+				}
+
+				async function get_item_to_update(item) {
+					document.getElementById('name').value = item.name;
+					document.getElementById('nif').value = item.nif;
+					document.getElementById('address').value = item.address;
+					document.getElementById('mail').value = item.email;
+					document.getElementById('phone').value = item.phone;
+					document.getElementById('pass').value = item.pass;
+					document.getElementById('confirmPass').value = item.confirmPass;
+				}
+				async function loadData(id, data, data) {
+					let host = window.location.origin;
+					fetch(`${host}/company/${id}`, {
+						method: 'GET',
+						headers: {
+							'Content-Type': 'application/json',
+						},
+					})
+						.then(response => {
+							return response.json();
+						})
+						.then(response => {
+							get_item_to_update(response);
+						})
+						.catch(error => {
+							console.log(error);
+						});
+
+					//var user = await result.json();
+					//get_item_to_update(user);
+				}
+
+				button.addEventListener('click', async event => {
+					// event.preventDefault();
+					const name = document.getElementById('name').value;
+					const nif = document.getElementById('nif').value;
+					const address = document.getElementById('address').value;
+					const mail = document.getElementById('mail').value;
+					const phone = document.getElementById('phone').value;
+					const password = document.getElementById('pass').value;
+					const confirmPassword = document.getElementById('confirmPass').value;
+
+					// Validated data, collected for the backend:
+
+					const formData = {
+						name: name,
+						nif: nif,
+						address: address,
+						email: mail,
+						phone: phone,
+						password: password,
+						confirmPassword: confirmPassword,
+					};
+					// Decide if create or update
+
+					if (item_id == null) {
+						create_button(formData);
+					} else {
+						update_button(formData);
+					}
+				});
+				async function update_button(formData) {
+					const id = item_id;
+					try {
+						// Confirm http
+						let host = window.location.origin;
+						const response = await fetch(`${host}/company/${id}`, {
+							method: 'PATCH',
+							headers: {
+								'Content-Type': 'application/json',
+							},
+							body: JSON.stringify(formData),
+						});
+
+						if (response.ok) {
+							// send data to MongoDB database and HTML table table_data
+							// formData.send.tbody;
+							// The intention is to redirect to the Home page to make the desired QR Code.
+							window.location.href = 'table_data_companies.html';
+
+							// response.status(200).send('User updated / created with success!');
+							console.log('Company created with success!');
+						} else {
+							// response.status(404).send('Erro ao criar utilizador! Tente novamente!');
+							console.log('Error creating company', response.statusText);
+						}
+					} catch (error) {
+						console.log('Network error:', error);
+					}
+				}
+
+				async function create_button(formData) {
+					try {
+						// Confirm http
+						let host = window.location.origin;
+						const response = await fetch(`${host}/company`, {
+							method: 'POST',
+							headers: {
+								'Content-Type': 'application/json',
+							},
+							body: JSON.stringify(formData),
+						});
+
+						if (response.ok) {
+							// send data to MongoDB database and HTML table table_data
+							//formData.send.tbody;
+							// The intention is to redirect to the Home page to make the desired QR Code.
+							window.location.href = 'table_data_companies.html';
+
+							console.log('Company created with success!');
+						} else {
+							response.status(404).send('Error creating user! Try again!');
+							console.log('Error creating user', response.statusText);
+						}
+					} catch (error) {
+						console.log('Network error:', error);
+					}
+				}
+			});
+		</script>
+	</body>
+</html>

@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link rel="stylesheet" href="/src/ui/css/add_form.css" />
+		<link rel="stylesheet" href="/css/add_form.css" />
 		<title>Add / Edit Client</title>
 	</head>
 	<body x-data="{ open: false }">
@@ -11,11 +11,11 @@
 			<a class="logo" href="#hero">QRCode Gen</a>
 			<nav class="nav">
 				<ul class="navbar">
-					<li><a href="/src/ui/indexey.html">Home</a></li>
+					<li><a href="indexey.html">Home</a></li>
 					<!-- <li><a href="#about">About</a></li>
 					<li><a href="#FAQ">FAQ's</a></li>
 					<li><a href="#footer">Contact Us</a></li> -->
-					<li><a href="/src/ui/signin_form.html">SigIn</a></li>
+					<li><a href="signin_form.html">SigIn</a></li>
 				</ul>
 				<!-- menu hamburger -->
 				<!-- <div id="webapp_cover">
@@ -101,40 +101,53 @@
 				async function get_item_to_update(item) {
 					document.getElementById('name').value = item.name;
 					document.getElementById('nif').value = item.nif;
+					document.getElementById('address').value = item.address;
+					document.getElementById('mail').value = item.email;
+					document.getElementById('phone').value = item.phone;
+					document.getElementById('pass').value = item.pass;
+					document.getElementById('confirmPass').value = item.confirmPass;
 				}
 				async function loadData(id, data, data) {
-					let result = await fetch(`http://localhost:3003/user/${id}`, {
+					let host = window.location.origin;
+					fetch(`${host}/user/${id}`, {
 						method: 'GET',
 						headers: {
 							'Content-Type': 'application/json',
 						},
-					});
-					var user = await result.json();
-					get_item_to_update(user);
+					})
+						.then(response => {
+							return response.json();
+						})
+						.then(response => {
+							get_item_to_update(response);
+						})
+						.catch(error => {
+							console.log(error);
+						});
 				}
 
 				button.addEventListener('click', async event => {
-					event.preventDefault();
+					// event.preventDefault();
 					const name = document.getElementById('name').value;
 					const nif = document.getElementById('nif').value;
 					const address = document.getElementById('address').value;
-					const email = document.getElementById('mail').value;
+					const mail = document.getElementById('mail').value;
 					const phone = document.getElementById('phone').value;
 					const password = document.getElementById('pass').value;
 					const confirmPassword = document.getElementById('confirmPass').value;
 
-					// Dados validados, recolhidos para o backend:
+					// Validated data, collected for the backend:
 
 					const formData = {
 						name: name,
 						nif: nif,
 						address: address,
-						email: email,
+						email: mail,
 						phone: phone,
 						password: password,
 						confirmPassword: confirmPassword,
 					};
-					//decide if create or update
+					// Decide if create or update
 
 					if (item_id == null) {
 						create_button(formData);
@@ -143,9 +156,11 @@
 					}
 				});
 				async function update_button(formData) {
+					const id = item_id;
 					try {
-						// confirmar o http
-						const response = await fetch('http://localhost:3003/user', {
+						// Confirm http
+						let host = window.location.origin;
+						const response = await fetch(`${host}/user/${id}`, {
 							method: 'PATCH',
 							headers: {
 								'Content-Type': 'application/json',
@@ -154,26 +169,27 @@
 						});
 
 						if (response.ok) {
-							// mandar dados para base de dados MongoDB e para a tabela HTML table_data
-							formData.send.tbody;
-							// A intenção é redirecionar para a página de Home a fazer já o QR Code pretendido
-							window.location.href = '/src/ui/table_data_users.html';
+							// send data to MongoDB database and HTML table table_data
+							// formData.send.tbody;
+							// The intention is to redirect to the Home page to make the desired QR Code.
+							window.location.href = 'table_data_users.html';
 
-							response.status(200).send('User updated / created with success!');
+							// response.status(200).send('User updated / created with success!');
 							console.log('User created with success!');
 						} else {
-							response.status(404).send('Erro ao criar utilizador! Tente novamente!');
-							console.log('Erro ao criar utilizador', response.statusText);
+							// response.status(404).send('Erro ao criar utilizador! Tente novamente!');
+							console.log('Error creating user', response.statusText);
 						}
 					} catch (error) {
-						console.log('Erro de rede:', error);
+						console.log('Network error:', error);
 					}
 				}
 
 				async function create_button(formData) {
 					try {
-						// confirmar o http
-						const response = await fetch('http://localhost:3003/user', {
+						// Confirm http
+						let host = window.location.origin;
+						const response = await fetch(`${host}/user`, {
 							method: 'POST',
 							headers: {
 								'Content-Type': 'application/json',
@@ -182,19 +198,18 @@
 						});
 
 						if (response.ok) {
-							// mandar dados para base de dados MongoDB e para a tabela HTML table_data
-							formData.send.tbody;
-							// A intenção é redirecionar para a página de Home a fazer já o QR Code pretendido
-							window.location.href = '/src/ui/table_data_users.html';
+							// send data to MongoDB database and HTML table table_data
+							//formData.send.tbody;
+							// The intention is to redirect to the Home page to make the desired QR Code.
+							window.location.href = 'table_data_users.html';
 
-							response.status(200).send('User updated / created with success!');
 							console.log('User created with success!');
 						} else {
-							response.status(404).send('Erro ao criar utilizador! Tente novamente!');
-							console.log('Erro ao criar utilizador', response.statusText);
+							response.status(404).send('Error creating user! Try again!');
+							console.log('Error creating user', response.statusText);
 						}
 					} catch (error) {
-						console.log('Erro de rede:', error);
+						console.log('Network error:', error);
 					}
 				}
 			});

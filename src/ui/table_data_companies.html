@@ -8,7 +8,7 @@
 		<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap" rel="stylesheet" />
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 		<link href="C:/Users/Utilizador/Documents/GitHub/QRCodeGenerator/frontend/src/css/table_data.css" rel="stylesheet" />
-		<link href="/src/ui/css/table_data.css" rel="stylesheet" />
+		<link href="/css/table_data.css" rel="stylesheet" />
 		<title>Data Companies</title>
 	</head>
 	<body>
@@ -16,11 +16,11 @@
 			<a class="logo" href="#hero">QRCode Gen</a>
 			<nav class="nav">
 				<ul class="navbar">
-					<li><a href="/src/ui/indexey.html">Home</a></li>
+					<li><a href="indexey.html">Home</a></li>
 					<!-- <li><a href="#about/">About</a></li>
 					<li><a href="#FAQ">FAQ's</a></li>
 					<li><a href="#footer">Contact Us</a></li> -->
-					<li><a href="/src/ui/signin_form.html">SigIn</a></li>
+					<li><a href="signin_form.html">SigIn</a></li>
 				</ul>
 				<!-- menu hamburger -->
 				<!-- <div id="webapp_cover">
@@ -40,7 +40,7 @@
 						<p>Data Companies</p>
 						<div>
 							<input placeholder="Client" type="text" required />
-							<a href="/src/ui/add_form.html" id="add_new" class="add_new">+ Add New</a>
+							<a href="add_form_company.html" id="add_new" class="add_new">+ Add New</a>
 						</div>
 					</div>
 					<div class="table_section">
@@ -61,7 +61,7 @@
 			</section>
 		</main>
 		<footer id="footer" class="footer">
-			<p>2024 an Engage Consulting Website, All Rights Reserved</p>
+			<p>2024 an X Company Website, All Rights Reserved</p>
 			<ul>
 				<li><a href="#" class="facebook">Facebook</a></li>
 				<li><a href="#" class="instagram">Instagram</a></li>
@@ -74,7 +74,8 @@
 				loadTable();
 			});
 			async function loadTable() {
-				let result = await fetch('http://localhost:3003/user', {
+				let host = window.location.origin;
+				let result = await fetch(`${host}/company`, {
 					method: 'GET',
 					headers: {
 						'Content-Type': 'application/json',
@@ -93,6 +94,7 @@
 
 				uniquePropertyNames.splice(uniquePropertyNames.indexOf('_id'), 1);
 				uniquePropertyNames.splice(uniquePropertyNames.indexOf('company_id'), 1);
+				uniquePropertyNames.splice(uniquePropertyNames.indexOf('mail'), 1);
 				uniquePropertyNames.splice(uniquePropertyNames.indexOf('password'), 1);
 				uniquePropertyNames.splice(uniquePropertyNames.indexOf('confirmPassword'), 1);
 
@@ -102,6 +104,7 @@
 				table.querySelector('thead').append(header);
 				table.querySelector('tbody').append(...rows);
 			}
+
 			function buildTableHeader(propertyNames) {
 				const headerRow = document.createElement('tr');
 				propertyNames.forEach(prop => {
@@ -110,7 +113,7 @@
 					headerRow.append(headerCell);
 				});
 				const headerCell = document.createElement('th');
-				headerCell.innerText = 'XXX';
+				headerCell.innerText = 'Edit / Delete';
 				headerRow.append(headerCell);
 				return headerRow;
 			}
@@ -127,13 +130,44 @@
 					});
 
 					const tableCell = document.createElement('td');
-					const link = document.createElement('a');
-					link.href = `add_form.html?id=${obj['_id']}`;
-					link.innerText = 'Edit';
-					tableCell.append(link);
+					const edit = document.createElement('a');
+					// change local form below!!
+					edit.href = `add_form_company.html?id=${obj['_id']}`;
+					edit.innerText = 'Edit';
+					tableCell.append(edit);
+					const text = document.createElement('p');
+					text.innerText = ' / ';
+					tableCell.append(text);
+					currentRow.append(tableCell);
+
+					const trash = document.createElement('a');
+					trash.innerText = 'Delete';
+					trash.addEventListener('mouseover', () => {
+						trash.style.color = 'red';
+					});
+					trash.addEventListener('mouseout', () => {
+						trash.style.color = '';
+					});
+					tableCell.append(trash);
 					currentRow.append(tableCell);
 
 					tableRows.push(currentRow);
+
+					// delete items from table on click of delete word
+					trash.addEventListener('click', async event => {
+						let host = window.location.origin;
+						let result = await fetch(`${host}/company/${obj['_id']}`, {
+							method: 'DELETE',
+							headers: {
+								'Content-Type': 'application/json',
+							},
+						});
+						if (result.ok) {
+							window.location.href = 'table_data_companies.html';
+						}
+						result.currentRow.remove();
+						console.log('Item removed!');
+					});
 				});
 				return tableRows;
 			}

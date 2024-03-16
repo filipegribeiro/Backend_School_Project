@@ -95,9 +95,10 @@ async function read(entity, id) {
 		await client.connect();
 		let db = await client.db(db_name);
 
-		let query = {};
-		query.id = `${id}`; //where id = $id
-		let content = await db.collection(entity).findOne(query);
+		//let query = {};
+		//query.id = `${id}`; //where id = $id
+		let filter = { _id: new ObjectId(`${id}`) };
+		let content = await db.collection(entity).findOne(filter);
 
 		return content;
 	} catch (err) {
@@ -126,21 +127,32 @@ async function list(entity) {
 	}
 }
 
-async function update(entity, id, content) {
+async function update(entity, id, updateData) {
 	try {
 		// Connect the client to the server (optional starting in v4.7)
 		await client.connect();
 		let db = await client.db(db_name);
 
-		let filter = { id: `${id}` };
+		let filter = { _id: new ObjectId(`${id}`) };
+		console.log('Filter:', filter);
+		//let query = `{id : ${id}}`; //where id = $id
 
-		let update = {
-			$set: content,
+		let update_item = {
+			$set: {
+				name: updateData.name,
+				nif: updateData.nif,
+				address: updateData.address,
+				mail: updateData.mail,
+				phone: updateData.phone,
+				password: updateData.password,
+				confirmPassword: updateData.confirmPassword,
+			},
 		};
+		console.log('Update item:', update_item);
 
-		// Criar em cima dinâmico !!!
+		let contentResult = await db.collection(entity).updateOne(filter, update_item);
+		console.log('Content result:', contentResult);
 
-		let contentResult = await db.collection(entity).updateOne(filter, update);
 		return contentResult;
 	} catch (err) {
 		console.log(err);
@@ -155,8 +167,8 @@ async function del(entity, id) {
 		await client.connect();
 		let db = await client.db(db_name);
 
-		// Filter by ID to specify the company you want to delete in the dabtabase
-		let filter = { id: `${id}` };
+		// Filter by ID to specify the entity you want to delete in the dabtabase
+		let filter = { _id: new ObjectId(`${id}`) };
 
 		let content = await db.collection(entity).deleteOne(filter);
 		return content;

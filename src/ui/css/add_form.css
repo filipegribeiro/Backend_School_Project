@@ -25,7 +25,7 @@
 	padding: 0;
 	box-sizing: border-box;
 	font-family: 'Fira Code', monospace;
-	border: 1px solid orange;
+	/* border: 1px solid orange; */
 }
 
 a {

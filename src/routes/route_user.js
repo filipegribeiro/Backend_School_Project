@@ -7,7 +7,7 @@ const router = express.Router();
 //CREATE
 router.post('/', controllers.create);
 router.post('/signup', controllers.signup);
-router.get('/:signin', controllers.signin);
+//router.get('/:signin', controllers.signin);
 //READ
 /**
  * @openapi

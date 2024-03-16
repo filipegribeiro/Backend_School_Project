@@ -8,7 +8,7 @@
 		<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap" rel="stylesheet" />
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 		<link href="C:/Users/Utilizador/Documents/GitHub/QRCodeGenerator/frontend/src/css/table_data.css" rel="stylesheet" />
-		<link href="/src/ui/css/table_data.css" rel="stylesheet" />
+		<link href="/xcode/src/ui/css/table_data.css" rel="stylesheet" />
 		<title>Data QRcode</title>
 	</head>
 	<body>
@@ -16,11 +16,11 @@
 			<a class="logo" href="#hero">QRCode Gen</a>
 			<nav class="nav">
 				<ul class="navbar">
-					<li><a href="/src/ui/indexey.html">Home</a></li>
+					<li><a href="/xcode/src/ui/indexey.html">Home</a></li>
 					<!-- <li><a href="#about/">About</a></li>
 					<li><a href="#FAQ">FAQ's</a></li>
 					<li><a href="#footer">Contact Us</a></li> -->
-					<li><a href="/src/ui/signin_form.html">SigIn</a></li>
+					<li><a href="/xcode/src/ui/signin_form.html">SigIn</a></li>
 				</ul>
 				<!-- menu hamburger -->
 				<!-- <div id="webapp_cover">
@@ -40,7 +40,7 @@
 						<p>Data QRcode</p>
 						<div>
 							<input placeholder="Client" type="text" required />
-							<a href="/src/ui/add_form.html" id="add_new" class="add_new">+ Add New</a>
+							<a href="/xcode/src/ui/add_form.html" id="add_new" class="add_new">+ Add New</a>
 						</div>
 					</div>
 					<div class="table_section">
@@ -61,7 +61,7 @@
 			</section>
 		</main>
 		<footer id="footer" class="footer">
-			<p>2024 an Engage Consulting Website, All Rights Reserved</p>
+			<p>2024 an X Company Website, All Rights Reserved</p>
 			<ul>
 				<li><a href="#" class="facebook">Facebook</a></li>
 				<li><a href="#" class="instagram">Instagram</a></li>
@@ -74,7 +74,7 @@
 				loadTable();
 			});
 			async function loadTable() {
-				let result = await fetch('http://localhost:3003/user', {
+				let result = await fetch('http://localhost:3003/qrcode', {
 					method: 'GET',
 					headers: {
 						'Content-Type': 'application/json',
@@ -110,7 +110,7 @@
 					headerRow.append(headerCell);
 				});
 				const headerCell = document.createElement('th');
-				headerCell.innerText = 'XXX';
+				headerCell.innerText = 'Edit / Delete';
 				headerRow.append(headerCell);
 				return headerRow;
 			}
