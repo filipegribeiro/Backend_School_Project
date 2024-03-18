@@ -206,8 +206,6 @@ a:hover {
 	transition: 0.5s;
 }
 
-/* verificar neste ponto abaixo para o tamanho das âncoras */
-
 .nav,
 .navbar {
 	display: flex;
@@ -327,26 +325,6 @@ a:hover {
 }
 
 /* ** Input (submit - LogIn) ** */
-
-/* .signin .content .form .inputBox input[type='submit'] {
-	padding: 10px;
-	background: var(--background-secondary);
-	color: var(--text-color-dark);
-	font-weight: 600;
-	font-size: 1.35em;
-	letter-spacing: 0.05em;
-	cursor: pointer;
-}
-.content .form .inputBox input[type='submit']:hover {
-	background: var(--background-primary);
-	color: var(--hover-color);
-	cursor: pointer;
-}
-input[type='submit']:active {
-	opacity: 0.6;
-} */
-
-/* ** Nova Âncora ** */
 
 .submit {
 	position: relative;

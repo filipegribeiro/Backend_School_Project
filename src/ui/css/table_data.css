@@ -1,7 +1,7 @@
 /*------------------------------------------------------------------
-Project:	QR Code Gen Table
-Version:	0.2
-Last change:	08/03/2024
+Project:	Xcode Table
+Version:	0.3
+Last change:	18/03/2024
 Assigned to:	Filipe Ribeiro
 -------------------------------------------------------------------*/
 
@@ -18,14 +18,6 @@ Assigned to:	Filipe Ribeiro
 	01. General Settings
 ---------------------------------------------------*/
 
-/* Google fonts or _typography */
-
-/* @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&family=Yanone+Kaffeesatz&display=swap'); */
-
-/* <style>
-@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap')
-</style> */
-
 /* variables */
 
 :root {
@@ -37,10 +29,6 @@ Assigned to:	Filipe Ribeiro
 	--text-color-light: #aaff00;
 	--hover-color: #ffff;
 	--background-secondary: #aaff00;
-
-	/* typography */
-
-	/* --font: url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap'); */
 }
 
 /************************* RESET ***********************************/
@@ -78,7 +66,6 @@ html {
 @media (max-width: 1085px) {
 	html {
 		font-size: 15px;
-		/* font-weight: bold; */
 	}
 	h1 {
 		font-size: 56px;
@@ -88,21 +75,18 @@ html {
 @media (max-width: 1040px) {
 	html {
 		font-size: 14px;
-		/* font-weight: bold; */
 	}
 }
 
 @media (max-width: 991px) {
 	html {
 		font-size: 13px;
-		/* font-weight: bold; */
 	}
 }
 
 @media (max-width: 940px) {
 	html {
 		font-size: 12px;
-		/* font-weight: bold; */
 	}
 }
 
@@ -111,8 +95,8 @@ body {
 	-webkit-font-smoothing: antialiased;
 	font-family: 'Fira Code', monospace;
 	background-color: var(--background-secondary);
-	/* color: var(--background-primary); */
 }
+
 /* reusable css classes */
 
 .container {
@@ -175,7 +159,6 @@ a:hover {
 ---------------------------------------------------*/
 section {
 	position: relative;
-	/* width: 100vw; */
 	height: 90vh;
 	margin-top: 75px;
 	display: flex;
@@ -209,8 +192,6 @@ table {
 	min-width: 900px;
 }
 
-/* you can reduce pixels above to make it responsive */
-
 .table_header {
 	display: flex;
 	justify-content: space-between;
@@ -231,8 +212,6 @@ table {
 	height: 500px;
 	overflow: auto;
 }
-
-/* you can reduce pixels above to make it responsive */
 
 button {
 	outline: none;
@@ -312,7 +291,6 @@ thead th {
 	top: 0;
 	background-color: var(--background-3);
 	color: var(--text-color-light);
-	/* font-size: 18px; */
 	font-weight: 700 bold;
 }
 
@@ -326,16 +304,6 @@ td {
 	text-align: center;
 	color: var(--hover-color);
 }
-
-/* if you need to put a profile photo */
-
-/* td img {
-	height: 60px;
-	width: 60px;
-	object-fit: cover;
-    border-radius: 15px;
-    border: 5px solid color
-} */
 
 tr:hover td {
 	color: var(--background-secondary);
@@ -423,14 +391,6 @@ tr:hover td {
 	font-size: 1rem;
 	font-weight: 600;
 }
-
-/* .footer p,
-a {
-	text-decoration: none;
-	color: var(--text-color-dark);
-	font-weight: 600;
-	font-size: 1rem;
-} */
 
 .facebook:hover {
 	color: #3b5998;

@@ -17,20 +17,8 @@
 			<nav class="nav">
 				<ul class="navbar">
 					<li><a href="indexey.html">Home</a></li>
-					<!-- <li><a href="#about/">About</a></li>
-					<li><a href="#FAQ">FAQ's</a></li>
-					<li><a href="#footer">Contact Us</a></li> -->
 					<li><a href="signin_form.html">SigIn</a></li>
 				</ul>
-				<!-- menu hamburger -->
-				<!-- <div id="webapp_cover">
-					<div id="menu_button">
-						<input type="checkbox" id="menu_checkbox" />
-						<label for="menu_checkbox" id="menu_label">
-							<div id="menu_text_bar"></div>
-						</label>
-					</div>
-				</div> -->
 			</nav>
 		</header>
 		<main>
@@ -40,7 +28,7 @@
 						<p>Data Companies</p>
 						<div>
 							<input placeholder="Client" type="text" required />
-							<a href="add_form_company.html" id="add_new" class="add_new">+ Add New</a>
+							<a href="add_form_users.html" id="add_new" class="add_new">+ Add New</a>
 						</div>
 					</div>
 					<div class="table_section">
@@ -131,7 +119,6 @@
 
 					const tableCell = document.createElement('td');
 					const edit = document.createElement('a');
-					// change local form below!!
 					edit.href = `add_form_company.html?id=${obj['_id']}`;
 					edit.innerText = 'Edit';
 					tableCell.append(edit);

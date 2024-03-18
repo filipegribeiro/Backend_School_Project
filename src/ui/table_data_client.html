@@ -17,20 +17,8 @@
 			<nav class="nav">
 				<ul class="navbar">
 					<li><a href="indexey.html">Home</a></li>
-					<!-- <li><a href="#about/">About</a></li>
-					<li><a href="#FAQ">FAQ's</a></li>
-					<li><a href="#footer">Contact Us</a></li> -->
 					<li><a href="signin_form.html">SigIn</a></li>
 				</ul>
-				<!-- menu hamburger -->
-				<!-- <div id="webapp_cover">
-					<div id="menu_button">
-						<input type="checkbox" id="menu_checkbox" />
-						<label for="menu_checkbox" id="menu_label">
-							<div id="menu_text_bar"></div>
-						</label>
-					</div>
-				</div> -->
 			</nav>
 		</header>
 		<main>
@@ -40,7 +28,7 @@
 						<p>Data Clients</p>
 						<div>
 							<input placeholder="Client" type="text" required />
-							<a href="add_form.html" id="add_new" class="add_new">+ Add New</a>
+							<a href="add_form_users.html" id="add_new" class="add_new">+ Add New</a>
 						</div>
 					</div>
 					<div class="table_section">
@@ -74,7 +62,8 @@
 				loadTable();
 			});
 			async function loadTable() {
-				let result = await fetch('http://localhost:3003/client', {
+				let host = window.location.origin;
+				let result = await fetch(`${host}/client`, {
 					method: 'GET',
 					headers: {
 						'Content-Type': 'application/json',
@@ -93,6 +82,7 @@
 
 				uniquePropertyNames.splice(uniquePropertyNames.indexOf('_id'), 1);
 				uniquePropertyNames.splice(uniquePropertyNames.indexOf('company_id'), 1);
+				uniquePropertyNames.splice(uniquePropertyNames.indexOf('mail'), 1);
 				uniquePropertyNames.splice(uniquePropertyNames.indexOf('password'), 1);
 				uniquePropertyNames.splice(uniquePropertyNames.indexOf('confirmPassword'), 1);
 
@@ -102,6 +92,7 @@
 				table.querySelector('thead').append(header);
 				table.querySelector('tbody').append(...rows);
 			}
+
 			function buildTableHeader(propertyNames) {
 				const headerRow = document.createElement('tr');
 				propertyNames.forEach(prop => {
@@ -127,13 +118,43 @@
 					});
 
 					const tableCell = document.createElement('td');
-					const link = document.createElement('a');
-					link.href = `add_form.html?id=${obj['_id']}`;
-					link.innerText = 'Edit';
-					tableCell.append(link);
+					const edit = document.createElement('a');
+					edit.href = `add_form_client.html?id=${obj['_id']}`;
+					edit.innerText = 'Edit';
+					tableCell.append(edit);
+					const text = document.createElement('p');
+					text.innerText = ' / ';
+					tableCell.append(text);
+					currentRow.append(tableCell);
+
+					const trash = document.createElement('a');
+					trash.innerText = 'Delete';
+					trash.addEventListener('mouseover', () => {
+						trash.style.color = 'red';
+					});
+					trash.addEventListener('mouseout', () => {
+						trash.style.color = '';
+					});
+					tableCell.append(trash);
 					currentRow.append(tableCell);
 
 					tableRows.push(currentRow);
+
+					// delete items from table on click of delete word
+					trash.addEventListener('click', async event => {
+						let host = window.location.origin;
+						let result = await fetch(`${host}/client/${obj['_id']}`, {
+							method: 'DELETE',
+							headers: {
+								'Content-Type': 'application/json',
+							},
+						});
+						if (result.ok) {
+							window.location.href = 'table_data_client.html';
+						}
+						result.currentRow.remove();
+						console.log('Item removed!');
+					});
 				});
 				return tableRows;
 			}

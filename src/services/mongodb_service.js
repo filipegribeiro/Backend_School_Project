@@ -19,7 +19,7 @@ const client = new MongoClient(uri, {
 async function createCollection(collection_name) {
 	let result = {};
 	try {
-		// Connect the client to the server (optional starting in v4.7)
+		// Connect the client to the server
 		await client.connect();
 		const db = await client.db(db_name);
 
@@ -36,7 +36,7 @@ async function createCollection(collection_name) {
 // deleteCollection
 async function deleteCollection(collection_name) {
 	try {
-		// Connect the client to the server (optional starting in v4.7)
+		// Connect the client to the server
 		await client.connect();
 		const db = await client.db(db_name);
 
@@ -53,7 +53,7 @@ async function deleteCollection(collection_name) {
 // validateCollection (checkCollection / existsCollecction)
 async function validateCollection(collection_name) {
 	try {
-		// Connect the client to the server (optional starting in v4.7)
+		// Connect the client to the server
 		await client.connect();
 		let db = await client.db(name_db);
 
@@ -70,7 +70,7 @@ async function validateCollection(collection_name) {
 // CRUDL genric (by entity)
 async function create(entity, content) {
 	try {
-		// Connect the client to the server (optional starting in v4.7)
+		// Connect the client to the server
 		await client.connect();
 
 		let db = await client.db(db_name);
@@ -91,7 +91,7 @@ async function create(entity, content) {
 
 async function read(entity, id) {
 	try {
-		// Connect the client to the server (optional starting in v4.7)
+		// Connect the client to the server
 		await client.connect();
 		let db = await client.db(db_name);
 
@@ -110,13 +110,11 @@ async function read(entity, id) {
 
 async function list(entity) {
 	try {
-		// Connect the client to the server (optional starting in v4.7)
+		// Connect the client to the server
 		await client.connect();
 		let db = await client.db(db_name);
 
 		// validate if collection already exist;
-		//await db.createCollection(entity);
-		//let query = `{id : ${id}}`; //where id = $id
 		let content = await db.collection(entity).find().toArray();
 
 		return content;
@@ -129,13 +127,12 @@ async function list(entity) {
 
 async function update(entity, id, updateData) {
 	try {
-		// Connect the client to the server (optional starting in v4.7)
+		// Connect the client to the server
 		await client.connect();
 		let db = await client.db(db_name);
 
 		let filter = { _id: new ObjectId(`${id}`) };
 		console.log('Filter:', filter);
-		//let query = `{id : ${id}}`; //where id = $id
 
 		let update_item = {
 			$set: {
@@ -163,7 +160,7 @@ async function update(entity, id, updateData) {
 
 async function del(entity, id) {
 	try {
-		// Connect the client to the server (optional starting in v4.7)
+		// Connect the client to the server
 		await client.connect();
 		let db = await client.db(db_name);
 

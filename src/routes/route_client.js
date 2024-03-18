@@ -6,20 +6,9 @@ const router = express.Router();
 
 //CREATE
 router.post('/', controllers.create);
+router.post('/signup', controllers.signup);
+//router.get('/:signin', controllers.signin);
 //READ
-/**
- * @openapi
- * '/company/:id':
- *  get:
- *     tags:
- *     - Company
- *     summary: Get company by ID
- *     responses:
- *       200:
- *         description: Success
- *       400:
- *         description: Bad request
- */
 router.get('/:id', controllers.read);
 //UPDATE
 router.patch('/:id', controllers.update);

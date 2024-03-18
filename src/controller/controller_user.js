@@ -4,7 +4,7 @@ var users = [];
 const controllers = {
 	signup: async function (req, res) {
 		try {
-			req.body.company_id = 1; // colar no id a empresa criada no insomnia
+			req.body.company_id = 1;
 			await controllers.create(req, res);
 			return;
 		} catch (err) {
@@ -14,7 +14,7 @@ const controllers = {
 
 	signin: async function (req, res) {
 		try {
-			req.body.company_id = 1; // colar no id a empresa criada no insomnia
+			req.body.company_id = 1;
 			await controllers.create(req, res);
 			return;
 		} catch (err) {
@@ -25,7 +25,7 @@ const controllers = {
 	create: async function (req, res) {
 		let userData = req.body;
 
-		//* data do registo do user
+		//* date of user registration
 		userData.registrationDate = new Date().toISOString();
 
 		// users.push(req.body);
@@ -54,23 +54,23 @@ const controllers = {
 
 	update: async function (req, res) {
 		try {
-			let id = req.params.id; //* Obtém o ID do user a ser atualizado
+			let id = req.params.id; //* Gets the ID of the user to be updated
 
-			let updateData = req.body; //* Obtém os novos dados do user do corpo da requisição
+			let updateData = req.body; //* Get the new user data from the request body
 			console.log('User ID:', id);
 
-			//* Encontra o user na lista de empresas pelo ID
+			//* Finds the user in the list of companies by ID
 			//let userToUpdate = users.find(x => x.id === id);
 			let userToUpdate = await service_mongodb.update('user', id, updateData);
 			console.log('User to update:', userToUpdate);
 
-			//* Verifica se o user existe
+			//* Checks if the user exists
 			if (!userToUpdate) {
 				res.status(404).send('User not found');
 				return;
 			}
 
-			//* Atualiza os campos específicos, se forem fornecidos no corpo da requisição
+			//* Updates the specific fields, if they are supplied in the body of the request
 			if (updateData.name) {
 				userToUpdate.name = updateData.name;
 			}

@@ -1,104 +1,131 @@
 'use strict';
 const service_mongodb = require('../services/mongodb_service.js');
-var qrcodes = [];
+var users = [];
 const controllers = {
-	create: async function (req, res) {
-		let qrcodeData = req.body;
-
-		if (!qrcodeData.name) {
-			res.status(404).send('? Name is required');
+	signup: async function (req, res) {
+		try {
+			req.body.company_id = 1;
+			await controllers.create(req, res);
 			return;
+		} catch (err) {
+			res.status(500).send(err);
 		}
-
-		if (!qrcodeData.nif || qrcodeData.nif.lenght < 9) {
-			res.status(404).send('? NIF is required and should be at least 9 characters long');
-			return;
-		}
-
-		/* if (!qrcodeData.address) {
-			res.status(404).send('? Address is required');
-			return;
-		} */
-
-		/* if (!qrcodeData.mail) {
-			res.status(404).send('? Mail is required');
-			return;
-		} */
-
-		if (!qrcodeData.phone) {
-			res.status(404).send('? Phone is required');
-			return;
-		}
-
-		qrcodes.push(req.body);
-		res.status(201).send('QRCode created with success').json(req.body);
 	},
 
-	read: async function (req, res) {
-		let id = parseInt(req.params.id);
-		let qrcodeReaded = qrcodes.filter(x => x.id == req.query.id);
-
-		if (!qrcodeReaded || !qrcodeReaded.id) {
-			res.status(404).send('QRCode not found');
+	signin: async function (req, res) {
+		try {
+			req.body.company_id = 1;
+			await controllers.create(req, res);
 			return;
+		} catch (err) {
+			res.status(500).send(err);
 		}
+	},
 
-		res.status(200).json(qrcodeReaded);
+	create: async function (req, res) {
+		let userData = req.body;
+
+		//* date of user registration
+		userData.registrationDate = new Date().toISOString();
+
+		// users.push(req.body);
+		await service_mongodb.create('QRcode', userData);
+
+		res.status(201).json(req.body);
+	},
+	read: async function (req, res) {
+		try {
+			//let id = parseInt(req.params.id);
+			let id = req.params.id.trim();
+			// let userReaded = users.filter(x => x.id == req.query.id);
+
+			let userReaded = await service_mongodb.read('QRcode', id);
+
+			if (!userReaded) {
+				res.status(404).send('QR Code not found');
+				return;
+			}
+			res.status(200).json(userReaded);
+		} catch (error) {
+			console.log(error);
+			return res.status(500).send('Internal Server Error');
+		}
 	},
 
 	update: async function (req, res) {
-		let id = parseInt(req.params.id);
+		try {
+			let id = req.params.id; //* Gets the ID of the user to be updated
 
-		let updateData = req.body;
+			let updateData = req.body; //* Get the new user data from the request body
+			console.log('QR Code ID:', id);
 
-		let qrcodeToUpdate = qrcodes.find(x => x.id === id);
+			//* Finds the user in the list of companies by ID
+			//let userToUpdate = users.find(x => x.id === id);
+			let userToUpdate = await service_mongodb.update('QRcode', id, updateData);
+			console.log('QR Code to update:', userToUpdate);
 
-		if (!qrcodeToUpdate) {
-			res.status(404).send('QR Code not found');
-			return;
+			//* Checks if the user exists
+			if (!userToUpdate) {
+				res.status(404).send('QR Code not found');
+				return;
+			}
+
+			//* Updates the specific fields, if they are supplied in the body of the request
+			if (updateData.name) {
+				userToUpdate.name = updateData.name;
+			}
+
+			if (updateData.nif) {
+				userToUpdate.nif = updateData.nif;
+			}
+
+			if (updateData.address) {
+				userToUpdate.address = updateData.address;
+			}
+
+			if (updateData.mail) {
+				userToUpdate.mail = updateData.mail;
+			}
+
+			if (updateData.phone) {
+				userToUpdate.phone = updateData.phone;
+			}
+
+			if (updateData.password) {
+				userToUpdate.password = updateData.password;
+			}
+
+			if (updateData.confirmPassword) {
+				userToUpdate.confirmPassword = updateData.confirmPassword;
+			}
+
+			return res.json(userToUpdate);
+		} catch (error) {
+			console.log(error);
+			return res.status(500).send('Internal Server Error');
 		}
-
-		if (updateData.name) {
-			qrcodeToUpdate.name = updateData.name;
-		}
-
-		if (updateData.nif) {
-			qrcodeToUpdate.nif = updateData.nif;
-		}
-
-		/* if (updateData.address) {
-			qrcodeToUpdate.address = updateData.address;
-		} */
-
-		/* if (updateData.mail) {
-			qrcodeToUpdate.mail = updateData.mail;
-		} */
-
-		if (updateData.phone) {
-			qrcodeToUpdate.phone = updateData.phone;
-		}
-
-		res.status(200).json(qrcodeToUpdate).send('QR Code updated with success');
 	},
 
 	delete: async function (req, res) {
-		let id = parseInt(req.params.id);
+		try {
+			let id = req.params.id;
 
-		let index = qrcodes.findIndex(x => x.id === id);
+			let deletedUser = await service_mongodb.del('QRcode', id);
 
-		if (index === -1) {
-			res.status(404).send('QR Code not found');
-			return;
+			if (!deletedUser) {
+				return res.status(404).send('QR Code not found');
+			}
+
+			return res.status(200).json(deletedUser);
+		} catch (error) {
+			console.log(error);
+			return res.status(500).send('Internal Server Error');
 		}
-
-		let deleteQRcode = qrcodes.slice(index, 1);
-
-		res.status(200).json(deleteQRcode[0]);
 	},
 
 	list: async function (req, res) {
-		let qrcodes = await service_mongodb.list('qrcode');
-		res.status(200).json(qrcodes);
+		let users = await service_mongodb.list('QRcode');
+		res.status(200).json(users);
 	},
 };
 

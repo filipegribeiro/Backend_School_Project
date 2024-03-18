@@ -1,7 +1,7 @@
 /*------------------------------------------------------------------
-Project:	X Company
-Version:	0.2
-Last change:	08/03/2024
+Project:	Xcode
+Version:	0.3
+Last change:	18/03/2024
 Assigned to:	Filipe Ribeiro
 -------------------------------------------------------------------*/
 
@@ -21,14 +21,6 @@ Assigned to:	Filipe Ribeiro
 	01. General Settings
 ---------------------------------------------------*/
 
-/* Google fonts or _typography */
-
-/* @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&family=Yanone+Kaffeesatz&display=swap'); */
-
-/* <style>
-@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap')
-</style> */
-
 /* variables */
 
 :root {
@@ -39,10 +31,6 @@ Assigned to:	Filipe Ribeiro
 	--text-color-light: #aaff00;
 	--hover-color: #ffff;
 	--background-secondary: #aaff00;
-
-	/* typography */
-
-	/* --font: url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap'); */
 }
 
 /************************* RESET ***********************************/
@@ -176,8 +164,6 @@ a:hover {
 	transition: 0.5s;
 }
 
-/* verificar neste ponto abaixo para o tamanho das âncoras */
-
 .nav,
 .navbar {
 	display: flex;
@@ -193,22 +179,15 @@ a:hover {
 }
 
 @media (max-width: 800px) {
-	/* body {
-		overflow-x: hidden;
-	} */
-
 	.navbar {
 		display: flex;
 		flex-direction: column;
-		/* align-items: center; */
-		/* justify-content: space-between; */
 		position: fixed;
 		width: 50%;
 		height: 100%;
 		top: 69px;
 		right: 0;
 		background: var(--background-primary);
-		/* border: var(--background-secondary) solid 2px; */
 		font-size: 2rem;
 		font-weight: bold;
 		padding: 10rem 1rem;
@@ -362,20 +341,12 @@ a:hover {
 
 .hero {
 	position: relative;
-	/* width: 100%; */
-	/* height: 100%; */
 	height: 90vh;
-	/* display: flex;
-	justify-content: center;
-	align-items: center; */
 	margin-top: 75px;
 	background-color: var(--background-secondary);
-	/* background-size: 25rem; */
 	background-position: right;
 	display: flex;
 	align-items: center;
-
-	/* padding: 0 10%; */
 }
 
 .hero_container {
@@ -491,7 +462,6 @@ a:hover {
 	position: relative;
 	width: 100%;
 	height: 100%;
-	/* background: url(/border.png); */
 	object-fit: cover;
 	background-position: center;
 	background-size: cover;
@@ -565,7 +535,6 @@ a:hover {
 	.small_container {
 		margin-bottom: 1rem;
 		padding-top: 0.5rem;
-		/* position: relative; */
 		display: flex;
 		flex-direction: column;
 		justify-content: center;

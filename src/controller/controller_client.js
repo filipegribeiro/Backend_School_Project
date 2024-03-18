@@ -1,107 +1,131 @@
 'use strict';
 const service_mongodb = require('../services/mongodb_service.js');
-var clients = [];
+var users = [];
 const controllers = {
+	signup: async function (req, res) {
+		try {
+			req.body.company_id = 1;
+			await controllers.create(req, res);
+			return;
+		} catch (err) {
+			res.status(500).send(err);
+		}
+	},
+
+	signin: async function (req, res) {
+		try {
+			req.body.company_id = 1;
+			await controllers.create(req, res);
+			return;
+		} catch (err) {
+			res.status(500).send(err);
+		}
+	},
+
 	create: async function (req, res) {
-		let clientData = req.body;
-		if (!clientData.name) {
-			res.status(404).send('Client Name is required');
-			return;
-		}
-		if (!clientData.nif || clientData.nif.lenght < 9) {
-			res.status(404).send('Client NIF is required and should be at least 9 characters long');
-			return;
-		}
-		if (!clientData.address) {
-			res.status(404).send('Client Address is required');
-			return;
-		}
-		if (!clientData.mail) {
-			res.status(404).send('Client Mail is required');
-			return;
-		}
-		if (!clientData.phone) {
-			res.status(404).send('Client Phone is required');
-			return;
-		}
+		let userData = req.body;
 
-		//* data do registo do cliente
-		clientData.registrationDate = new Date().toISOString();
+		//* date of user registration
+		userData.registrationDate = new Date().toISOString();
 
-		// clientData.push(clientData);
-		await service_mongodb.create('client', clientData);
+		// users.push(req.body);
+		await service_mongodb.create('client', userData);
 
-		res.status(201).json(clientData);
+		res.status(201).json(req.body);
 	},
 	read: async function (req, res) {
-		let id = parseInt(req.params.id);
+		try {
+			//let id = parseInt(req.params.id);
+			let id = req.params.id.trim();
+			// let userReaded = users.filter(x => x.id == req.query.id);
 
-		let clientReaded = await service_mongodb.read('client', id);
+			let userReaded = await service_mongodb.read('client', id);
 
-		if (!clientReaded || !clientReaded.id) {
-			res.status(404).send('Client not found');
-			return;
+			if (!userReaded) {
+				res.status(404).send('Client not found');
+				return;
+			}
+			res.status(200).json(userReaded);
+		} catch (error) {
+			console.log(error);
+			return res.status(500).send('Internal Server Error');
 		}
-
-		res.status(200).json(clientReaded);
 	},
+
 	update: async function (req, res) {
-		let id = parseInt(req.params.id); //* Obtém o ID do cliente a ser atualizado
+		try {
+			let id = req.params.id; //* Gets the ID of the user to be updated
 
-		let updateData = req.body; //* Obtém os novos dados do novo cliente do corpo da requisição
+			let updateData = req.body; //* Get the new user data from the request body
+			console.log('Client ID:', id);
 
-		let clientToUpdate = {};
+			//* Finds the user in the list of companies by ID
+			//let userToUpdate = users.find(x => x.id === id);
+			let userToUpdate = await service_mongodb.update('client', id, updateData);
+			console.log('Client to update:', userToUpdate);
 
-		//* Atualiza os campos específicos, se forem fornecidos no corpo da requisição
-		if (updateData.name) {
-			clientToUpdate.name = updateData.name;
-		}
-		if (updateData.nif) {
-			clientToUpdate.nif = updateData.nif;
-		}
-		if (updateData.address) {
-			clientToUpdate.address = updateData.address;
-		}
-		if (updateData.mail) {
-			clientToUpdate.mail = updateData.mail;
-		}
-		if (updateData.phone) {
-			clientToUpdate.phone = updateData.phone;
-		}
+			//* Checks if the user exists
+			if (!userToUpdate) {
+				res.status(404).send('Client not found');
+				return;
+			}
 
-		clientToUpdate = await service_mongodb.update('client', id, clientToUpdate);
+			//* Updates the specific fields, if they are supplied in the body of the request
+			if (updateData.name) {
+				userToUpdate.name = updateData.name;
+			}
 
-		//* Verifica se o cliente existe
-		if (!clientToUpdate || clientToUpdate.id) {
-			res.status(404).send('Client not found');
-			return;
+			if (updateData.nif) {
+				userToUpdate.nif = updateData.nif;
+			}
+
+			if (updateData.address) {
+				userToUpdate.address = updateData.address;
+			}
+
+			if (updateData.mail) {
+				userToUpdate.mail = updateData.mail;
+			}
+
+			if (updateData.phone) {
+				userToUpdate.phone = updateData.phone;
+			}
+
+			if (updateData.password) {
+				userToUpdate.password = updateData.password;
+			}
+
+			if (updateData.confirmPassword) {
+				userToUpdate.confirmPassword = updateData.confirmPassword;
+			}
+
+			return res.json(userToUpdate);
+		} catch (error) {
+			console.log(error);
+			return res.status(500).send('Internal Server Error');
 		}
-
-		res.status(200).json(clientToUpdate); //* E assim retorna o cliente atualizada
 	},
+
 	delete: async function (req, res) {
-		let id = parseInt(req.params.id); //* Obtém o ID do cliente a ser excluído
+		try {
+			let id = req.params.id;
 
-		//* Remove o cliente da lista
-		let deleteClient = await service_mongodb.del('client', id);
+			let deletedUser = await service_mongodb.del('client', id);
 
-		//* Verifica se o cliente existe: index === -1 através do findIndex, verifica se o índice do cliente existe, retornando -1 caso não exista.
-		if (!deleteClient) {
-			res.status(404).send('Company not found');
-			return;
+			if (!deletedUser) {
+				return res.status(404).send('Client not found');
+			}
+
+			return res.status(200).json(deletedUser);
+		} catch (error) {
+			console.log(error);
+			return res.status(500).send('Internal Server Error');
 		}
-
-		/* if (index === -1) {
-			res.status(404).send('Client not found');
-			return;
-		} */
-
-		res.status(200).json(deleteClient).send('Client deleted successfully'); //* E assim retorna o status do cliente excluída
 	},
 
 	list: async function (req, res) {
-		let clients = await service_mongodb.list('client');
-		res.status(200).json(clients);
+		let users = await service_mongodb.list('client');
+		res.status(200).json(users);
 	},
 };
 
