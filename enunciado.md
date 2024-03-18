@@ -12,7 +12,7 @@ O Sistema tem vários tipos de QR Code.
 
 Como é usual, as empresas prestam serviços a clientes.
 
-Queremos também armazenar digitalmente todos os dados dos QR Codes e as suas configurações.
+Queremos também armazenar digitalmente todos os dados dos QR Codes.
 
 A cada QR Code está associado uma Empresa e a um Cliente.
 
