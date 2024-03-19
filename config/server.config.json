@@ -1,5 +1,5 @@
 {
-	"APP_URL_PATH": "/xcode",
+	"APP_URL_PATH": "/Xcode",
 	"APP_PORT": 3003,
 	"DB_ACCESS": "mongodb+srv://gfiliper:2CQbnytk83XtVmSf@xcodecluster.u4s8io4.mongodb.net/?retryWrites=true&w=majority&appName=XcodeCluster",
 	"DB_NAME": "qrcode"
